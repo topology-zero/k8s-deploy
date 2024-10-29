@@ -212,22 +212,16 @@ type TemplateListResponse struct {
 }
 
 type TemplateList struct {
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Desc        string `json:"desc"`
-	Git         string `json:"git"`
-	Token       string `json:"token"`
-	UseTag      int    `json:"useTag"`
-	DockerImage string `json:"dockerImage"`
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	Desc    string `json:"desc"`
+	Content string `json:"content"`
 }
 
 type TemplateAddRequest struct {
-	Name        string `json:"name"`
-	Desc        string `json:"desc"`
-	Git         string `json:"git"`
-	Token       string `json:"token"`
-	UseTag      int    `json:"useTag"`
-	DockerImage string `json:"dockerImage"`
+	Name    string `json:"name"`
+	Desc    string `json:"desc"`
+	Content string `json:"content"`
 }
 
 type TemplateEditRequest struct {

@@ -16,19 +16,13 @@ type (
         ID int `json:"id"`
         Name string `json:"name"`
         Desc string `json:"desc"`
-        Git string `json:"git"`
-        Token string `json:"token"`
-        UseTag int `json:"useTag"`
-        DockerImage string `json:"dockerImage"`
+        Content string `json:"content"`
     }
 
     TemplateAddRequest {
         Name string `json:"name"`
         Desc string `json:"desc"`
-        Git string `json:"git"`
-        Token string `json:"token"`
-        UseTag int `json:"useTag"`
-        DockerImage string `json:"dockerImage"`
+        Content string `json:"content"`
     }
 
     TemplateEditRequest {
