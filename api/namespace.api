@@ -1,0 +1,36 @@
+syntax = "v1"
+
+type (
+    NamespaceListResponse {
+        Name string `json:"name"`
+    }
+
+    NamespaceAddRequest {
+        Name string `json:"name" binding:"required"`
+    }
+
+    NamespaceDelRequest {
+        Name string `json:"name" binding:"required"`
+    }
+)
+
+@server(
+    jwt: Jwt
+    middleware: Auth
+    group: namespace
+    swtags: 命名空间管理
+)
+
+service k8s-deploy {
+    @doc "命名空间列表"
+    @handler list
+    get /namespace returns ([]NamespaceListResponse)
+
+    @doc "添加命名空间"
+    @handler add
+    post /namespace (NamespaceAddRequest)
+
+    @doc "删除命名空间"
+    @handler del
+    delete /namespace (NamespaceDelRequest)
+}

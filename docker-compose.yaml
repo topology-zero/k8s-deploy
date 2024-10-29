@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  k8s-deploy:
+    image: registry.cn-hangzhou.aliyuncs.com/tanwuyang/k8s-deploy:latest
+    container_name: k8s-deploy
+    restart: always
+    command:
+      - "-env"
+      - "local"
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./log:/var/logs/k8s-deploy
+      - ./etc:/home/project/etc
+      - ./asset:/home/project/asset

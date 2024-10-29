@@ -1,0 +1,63 @@
+syntax = "v1"
+
+type (
+    TemplateListRequest {
+        Page int `form:"page"`
+        PageSize int `form:"pageSize"`
+        name string `form:"name"`
+    }
+
+    TemplateListResponse {
+        Total int `json:"total"`
+        Data []TemplateList `json:"data"`
+    }
+
+    TemplateList {
+        ID int `json:"id"`
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+        Git string `json:"git"`
+        Token string `json:"token"`
+        UseTag int `json:"useTag"`
+        DockerImage string `json:"dockerImage"`
+    }
+
+    TemplateAddRequest {
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+        Git string `json:"git"`
+        Token string `json:"token"`
+        UseTag int `json:"useTag"`
+        DockerImage string `json:"dockerImage"`
+    }
+
+    TemplateEditRequest {
+        PathID
+        TemplateAddRequest
+    }
+)
+
+@server(
+    jwt: Jwt
+    middleware: Auth
+    group: template
+    swtags: 模板管理
+)
+
+service k8s-deploy {
+    @doc "模板列表"
+    @handler list
+    get /template (TemplateListRequest) returns (TemplateListResponse)
+
+    @doc "添加模板"
+    @handler add
+    post /template (TemplateAddRequest)
+
+    @doc "编辑模板"
+    @handler edit
+    put /template/:id (TemplateEditRequest)
+
+    @doc "删除模板"
+    @handler del
+    delete /template/:id (PathID)
+}

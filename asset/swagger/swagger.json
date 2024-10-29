@@ -1,0 +1,1309 @@
+{
+    "openapi": "3.1.0",
+    "servers": [
+        {
+            "url": "/"
+        }
+    ],
+    "info": {
+        "title": "后台管理系统"
+    },
+    "tags": [
+        {
+            "name": "通用接口"
+        },
+        {
+            "name": "登录相关"
+        },
+        {
+            "name": "后台用户相关"
+        },
+        {
+            "name": "后台角色相关"
+        },
+        {
+            "name": "后台权限相关"
+        },
+        {
+            "name": "基础接口相关"
+        },
+        {
+            "name": "命名空间管理"
+        },
+        {
+            "name": "项目管理"
+        }
+    ],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "paths": {
+        "/auth": {
+            "get": {
+                "tags": [
+                    "后台权限相关"
+                ],
+                "summary": "权限列表",
+                "operationId": "7528451a-9a05-45eb-8a3e-ae5ca53749cc",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AuthListResponse",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "后台权限相关"
+                ],
+                "summary": "添加权限",
+                "operationId": "8427c35b-eb90-4f9b-914f-9aff537d6887",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthAddRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/{id}": {
+            "put": {
+                "tags": [
+                    "后台权限相关"
+                ],
+                "summary": "编辑权限",
+                "operationId": "11f8eb3b-86e5-42d0-9c49-fc9bb2a746a3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthEditRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "后台权限相关"
+                ],
+                "summary": "删除权限",
+                "operationId": "0c2209c0-7098-4579-ae43-5076149eb5f1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/base/auth": {
+            "get": {
+                "tags": [
+                    "基础接口相关"
+                ],
+                "summary": "获取所有权限",
+                "operationId": "e886fe6d-c34b-4911-ab31-5b2390bc6b6a",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BaseAuthResponse",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/base/changeSelfPwd": {
+            "post": {
+                "tags": [
+                    "基础接口相关"
+                ],
+                "summary": "修改自己的密码",
+                "operationId": "061349b4-a7aa-4134-be1b-560fc1f829a2",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangeSelfPwdRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/base/role": {
+            "get": {
+                "tags": [
+                    "基础接口相关"
+                ],
+                "summary": "获取所有角色",
+                "operationId": "b2640c59-9249-4071-aab5-bc25043f9818",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IDAndName",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/base/userInfo": {
+            "get": {
+                "tags": [
+                    "基础接口相关"
+                ],
+                "summary": "获取用户信息",
+                "operationId": "9f3a04d3-5e64-4d38-bfa3-d5900c3614ac",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserInfoResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/code": {
+            "get": {
+                "tags": [
+                    "登录相关"
+                ],
+                "summary": "获取验证码",
+                "operationId": "bc1887d4-469b-4612-a405-03a9313f1175",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CodeResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "登录相关"
+                ],
+                "summary": "登录",
+                "operationId": "4025c047-6c54-4ea4-bfbb-62585759da16",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "登录相关"
+                ],
+                "summary": "退出登录",
+                "operationId": "439e914b-0f21-4487-970a-b85e9ae2ca13"
+            }
+        },
+        "/namespace": {
+            "get": {
+                "tags": [
+                    "命名空间管理"
+                ],
+                "summary": "命名空间列表",
+                "operationId": "f98b1ca0-b430-4108-9d71-48b143cc3cd0",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NamespaceListResponse",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "命名空间管理"
+                ],
+                "summary": "添加命名空间",
+                "operationId": "4f12bb72-b6af-4dc3-b207-a27b6c5d2e95",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NamespaceAddRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "命名空间管理"
+                ],
+                "summary": "删除命名空间",
+                "operationId": "92a065ac-e975-44b0-bcbe-5cfee3cb0572",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NamespaceDelRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project": {
+            "get": {
+                "tags": [
+                    "项目管理"
+                ],
+                "summary": "项目列表",
+                "operationId": "3a70590e-7a41-4035-930a-e419ba34a230",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectListResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "项目管理"
+                ],
+                "summary": "添加项目",
+                "operationId": "22a0f4ac-283e-48f4-8c78-089a3bb56096",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectAddRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/project/{id}": {
+            "put": {
+                "tags": [
+                    "项目管理"
+                ],
+                "summary": "编辑项目",
+                "operationId": "2ed30718-5cd6-4587-ba6d-605110cac2b5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectEditRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "项目管理"
+                ],
+                "summary": "删除项目",
+                "operationId": "ecad28fd-2e02-4534-99a8-daf3b7368d2b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/role": {
+            "get": {
+                "tags": [
+                    "后台角色相关"
+                ],
+                "summary": "角色列表",
+                "operationId": "a667e98a-32dc-4a49-8f0d-527b9567215f",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "分页"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "每页条数"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleListResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "后台角色相关"
+                ],
+                "summary": "添加角色",
+                "operationId": "b3cfbcdf-bcf7-44b7-b033-b27b7340f27a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleAddRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/role/{id}": {
+            "get": {
+                "tags": [
+                    "后台角色相关"
+                ],
+                "summary": "角色详情",
+                "operationId": "36f49ec2-873c-4e4d-ae5b-ccb357156ebe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoleDetailResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "后台角色相关"
+                ],
+                "summary": "编辑角色",
+                "operationId": "20ddd60b-e865-4f4c-b72a-939b67e75111",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleEditRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "后台角色相关"
+                ],
+                "summary": "删除角色",
+                "operationId": "69bba66d-0141-4f50-b24b-ed150197e364",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/upload/image": {
+            "post": {
+                "tags": [
+                    "通用接口"
+                ],
+                "summary": "上传图片",
+                "operationId": "5a708da8-6f42-4bb8-8146-c1a96f11c5af",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "后台用户相关"
+                ],
+                "summary": "用户列表",
+                "operationId": "de67b13e-1b0a-412d-8a6e-4f5a6b022785",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "分页"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "每页条数"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserListResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "后台用户相关"
+                ],
+                "summary": "添加用户",
+                "operationId": "0fb1b2a1-a845-472c-9c22-e5d28092150d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserAddRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "tags": [
+                    "后台用户相关"
+                ],
+                "summary": "用户详情",
+                "operationId": "4b857409-6a4a-4d1b-9226-80736cd62197",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDetailResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "后台用户相关"
+                ],
+                "summary": "编辑用户",
+                "operationId": "7cc7fcaf-3217-4d1f-bd18-39bdca5049b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserEditRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "后台用户相关"
+                ],
+                "summary": "删除用户",
+                "operationId": "8f4292f1-446a-4c27-8114-c246ba634b4a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthAddRequest": {
+                "type": "object",
+                "title": "AuthAddRequest",
+                "properties": {
+                    "action": {
+                        "description": "操作方法",
+                        "type": "string"
+                    },
+                    "api": {
+                        "description": "接口",
+                        "type": "string"
+                    },
+                    "isMenu": {
+                        "description": "是否是菜单栏 0：否 1：是",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "key": {
+                        "description": "权限标识",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "节点名",
+                        "type": "string"
+                    },
+                    "pid": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "AuthEditRequest": {
+                "type": "object",
+                "title": "AuthEditRequest",
+                "properties": {
+                    "action": {
+                        "description": "操作方法",
+                        "type": "string"
+                    },
+                    "api": {
+                        "description": "接口",
+                        "type": "string"
+                    },
+                    "isMenu": {
+                        "description": "是否是菜单栏 0：否 1：是",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "key": {
+                        "description": "权限标识",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "节点名",
+                        "type": "string"
+                    },
+                    "pid": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "AuthListResponse": {
+                "type": "object",
+                "title": "AuthListResponse",
+                "properties": {
+                    "action": {
+                        "description": "操作方法",
+                        "type": "string"
+                    },
+                    "api": {
+                        "description": "接口",
+                        "type": "string"
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AuthListResponse"
+                        }
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "isMenu": {
+                        "description": "是否是菜单栏 0：否 1：是",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "key": {
+                        "description": "权限标识",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "节点名",
+                        "type": "string"
+                    },
+                    "pid": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "BaseAuthResponse": {
+                "type": "object",
+                "title": "BaseAuthResponse",
+                "properties": {
+                    "children": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BaseAuthResponse"
+                        }
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "description": "节点名",
+                        "type": "string"
+                    },
+                    "pid": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ChangeSelfPwdRequest": {
+                "type": "object",
+                "title": "ChangeSelfPwdRequest",
+                "properties": {
+                    "confirmPassword": {
+                        "description": "确认密码",
+                        "type": "string"
+                    },
+                    "newPassword": {
+                        "description": "新密码",
+                        "type": "string"
+                    },
+                    "oldPassword": {
+                        "description": "老密码",
+                        "type": "string"
+                    }
+                }
+            },
+            "CodeResponse": {
+                "type": "object",
+                "title": "CodeResponse",
+                "properties": {
+                    "id": {
+                        "description": "在登录时提交",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "验证码 base64 格式",
+                        "type": "string"
+                    }
+                }
+            },
+            "IDAndName": {
+                "type": "object",
+                "title": "IDAndName",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "title": "LoginRequest",
+                "properties": {
+                    "code": {
+                        "description": "验证码",
+                        "type": "string"
+                    },
+                    "codeId": {
+                        "description": "获取验证码时的ID",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "密码",
+                        "type": "string"
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "title": "LoginResponse",
+                "properties": {
+                    "jwt": {
+                        "description": "jwt 凭证",
+                        "type": "string"
+                    }
+                }
+            },
+            "NamespaceAddRequest": {
+                "type": "object",
+                "title": "NamespaceAddRequest",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NamespaceDelRequest": {
+                "type": "object",
+                "title": "NamespaceDelRequest",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NamespaceListResponse": {
+                "type": "object",
+                "title": "NamespaceListResponse",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ParamID": {
+                "type": "object",
+                "title": "ParamID",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ProjectAddRequest": {
+                "type": "object",
+                "title": "ProjectAddRequest",
+                "properties": {
+                    "desc": {
+                        "type": "string"
+                    },
+                    "git": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "useTag": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ProjectEditRequest": {
+                "type": "object",
+                "title": "ProjectEditRequest",
+                "properties": {
+                    "desc": {
+                        "type": "string"
+                    },
+                    "git": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "useTag": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ProjectList": {
+                "type": "object",
+                "title": "ProjectList",
+                "properties": {
+                    "desc": {
+                        "type": "string"
+                    },
+                    "git": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "useTag": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ProjectListRequest": {
+                "type": "object",
+                "title": "ProjectListRequest",
+                "properties": {
+                    "page": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "ProjectListResponse": {
+                "type": "object",
+                "title": "ProjectListResponse",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProjectList"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "RoleAddRequest": {
+                "type": "object",
+                "title": "RoleAddRequest",
+                "properties": {
+                    "auth": {
+                        "type": "array",
+                        "items": {
+                            "description": "权限ID",
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "name": {
+                        "description": "角色名",
+                        "type": "string"
+                    }
+                }
+            },
+            "RoleDetailResponse": {
+                "type": "object",
+                "title": "RoleDetailResponse",
+                "properties": {
+                    "auth": {
+                        "type": "array",
+                        "items": {
+                            "description": "权限ID",
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "description": "角色名",
+                        "type": "string"
+                    }
+                }
+            },
+            "RoleEditRequest": {
+                "type": "object",
+                "title": "RoleEditRequest",
+                "properties": {
+                    "auth": {
+                        "type": "array",
+                        "items": {
+                            "description": "权限ID",
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "name": {
+                        "description": "角色名",
+                        "type": "string"
+                    }
+                }
+            },
+            "RoleList": {
+                "type": "object",
+                "title": "RoleList",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "description": "角色名",
+                        "type": "string"
+                    }
+                }
+            },
+            "RoleListRequest": {
+                "type": "object",
+                "title": "RoleListRequest",
+                "properties": {
+                    "page": {
+                        "description": "分页",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "description": "每页条数",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "RoleListResponse": {
+                "type": "object",
+                "title": "RoleListResponse",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RoleList"
+                        }
+                    },
+                    "total": {
+                        "description": "总条数",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "UserAddRequest": {
+                "type": "object",
+                "title": "UserAddRequest",
+                "properties": {
+                    "password": {
+                        "description": "密码",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                    },
+                    "realname": {
+                        "description": "真实姓名",
+                        "type": "string"
+                    },
+                    "roleId": {
+                        "description": "角色ID",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "status": {
+                        "description": "状态 0:未启用 1:正常",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserDetailResponse": {
+                "type": "object",
+                "title": "UserDetailResponse",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                    },
+                    "realname": {
+                        "description": "真实姓名",
+                        "type": "string"
+                    },
+                    "roleId": {
+                        "description": "角色ID",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "status": {
+                        "description": "状态 0:未启用 1:正常",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserEditRequest": {
+                "type": "object",
+                "title": "UserEditRequest",
+                "properties": {
+                    "password": {
+                        "description": "密码",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                    },
+                    "realname": {
+                        "description": "真实姓名",
+                        "type": "string"
+                    },
+                    "roleId": {
+                        "description": "角色ID",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "status": {
+                        "description": "状态 0:未启用 1:正常",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserInfoResponse": {
+                "type": "object",
+                "title": "UserInfoResponse",
+                "properties": {
+                    "authkeys": {
+                        "description": "角色权限KEY",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "用户ID",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                    },
+                    "realname": {
+                        "description": "真实姓名",
+                        "type": "string"
+                    },
+                    "rolename": {
+                        "description": "角色名",
+                        "type": "string"
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserList": {
+                "type": "object",
+                "title": "UserList",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                    },
+                    "realname": {
+                        "description": "真实姓名",
+                        "type": "string"
+                    },
+                    "rolename": {
+                        "description": "角色名",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "状态 0:未启用 1:正常",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "username": {
+                        "description": "用户名",
+                        "type": "string"
+                    }
+                }
+            },
+            "UserListRequest": {
+                "type": "object",
+                "title": "UserListRequest",
+                "properties": {
+                    "page": {
+                        "description": "分页",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "description": "每页条数",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "UserListResponse": {
+                "type": "object",
+                "title": "UserListResponse",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserList"
+                        }
+                    },
+                    "total": {
+                        "description": "总条数",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "description": "Enter JWT Bearer token **_only_**",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

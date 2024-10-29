@@ -1,0 +1,28 @@
+syntax = "v1"
+
+type (
+    PathID {
+        ID int `uri:"id"`
+    }
+
+    ParamID {
+        ID int `form:"id"`
+    }
+
+    IDAndName {
+        ID int `json:"id"`
+        Name string `json:"name"`
+    }
+)
+
+@server(
+    jwt: Jwt
+    group: common
+    swtags: 通用接口
+)
+
+service k8s-deploy {
+    @doc "上传图片"
+    @handler uploadImage
+    post /upload/image returns (string)
+}

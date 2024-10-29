@@ -1,0 +1,63 @@
+syntax = "v1"
+
+type (
+    RoleListRequest {
+        Page int `form:"page"`         // 分页
+        PageSize int `form:"pageSize"` // 每页条数
+    }
+
+    RoleListResponse {
+        Total int `json:"total"`       // 总条数
+        Data []RoleList `json:"data"`  // 具体数据
+    }
+
+    RoleList {
+        ID int `json:"id"`
+        Name string `json:"name"` // 角色名
+    }
+
+    RoleDetailResponse {
+        ID int `json:"id"`
+        Name string `json:"name"` // 角色名
+        Auth []int `json:"auth"`  // 权限ID
+    }
+
+    RoleAddRequest {
+        Name string `json:"name" binding:"required"`      // 角色名
+        Auth []int `json:"auth" binding:"required,min=1"` // 权限ID
+    }
+
+    RoleEditRequest {
+        PathID
+        RoleAddRequest
+    }
+)
+
+@server(
+    jwt: Jwt
+    middleware: Auth
+    group: adminRole
+    swtags: 后台角色相关
+)
+
+service k8s-deploy {
+    @doc "角色列表"
+    @handler list
+    get /role (RoleListRequest) returns (RoleListResponse)
+
+    @doc "角色详情"
+    @handler detail
+    get /role/:id (PathID) returns (RoleDetailResponse)
+
+    @doc "添加角色"
+    @handler add
+    post /role (RoleAddRequest)
+
+    @doc "编辑角色"
+    @handler edit
+    put /role/:id (RoleEditRequest)
+
+    @doc "删除角色"
+    @handler del
+    delete /role/:id (PathID)
+}

@@ -1,0 +1,61 @@
+syntax = "v1"
+
+type (
+    ProjectListRequest {
+        Page int `form:"page"`
+        PageSize int `form:"pageSize"`
+        name string `form:"name"`
+    }
+
+    ProjectListResponse {
+        Total int `json:"total"`
+        Data []ProjectList `json:"data"`
+    }
+
+    ProjectList {
+        ID int `json:"id"`
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+        Git string `json:"git"`
+        Token string `json:"token"`
+        UseTag int `json:"useTag"`
+    }
+
+    ProjectAddRequest {
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+        Git string `json:"git"`
+        Token string `json:"token"`
+        UseTag int `json:"useTag"`
+    }
+
+    ProjectEditRequest {
+        PathID
+        ProjectAddRequest
+    }
+)
+
+@server(
+    jwt: Jwt
+    middleware: Auth
+    group: project
+    swtags: 项目管理
+)
+
+service k8s-deploy {
+    @doc "项目列表"
+    @handler list
+    get /project (ProjectListRequest) returns (ProjectListResponse)
+
+    @doc "添加项目"
+    @handler add
+    post /project (ProjectAddRequest)
+
+    @doc "编辑项目"
+    @handler edit
+    put /project/:id (ProjectEditRequest)
+
+    @doc "删除项目"
+    @handler del
+    delete /project/:id (PathID)
+}
