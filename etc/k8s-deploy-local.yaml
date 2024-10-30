@@ -4,7 +4,7 @@ Server:
   Port: 8888
 
 Jwt:
-  Secret: 99fb6dae-caa4-45d1-8635-8ce8e2078d76
+  Secret: qpsit6tBepJWSVn
   Expire: 24
 
 Log:
