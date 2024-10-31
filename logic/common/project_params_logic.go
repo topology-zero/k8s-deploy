@@ -1,12 +1,14 @@
 package common
 
 import (
+	"encoding/json"
 	"net/url"
 	"os"
 	"sort"
 	"strings"
 
 	"k8s-deploy/model"
+	"k8s-deploy/pkg/kubectl"
 	"k8s-deploy/query"
 	"k8s-deploy/svc"
 	"k8s-deploy/types"
@@ -14,6 +16,7 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/pkg/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // ProjectParams 项目参数
@@ -31,16 +34,34 @@ func ProjectParams(ctx *svc.ServiceContext, req *types.PathID) (resp []types.Com
 		}
 	}
 
+	namespace, err := getNamespace(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	tagVal := ""
 	if len(tag) > 0 {
 		tagVal = tag[0]
 	}
 
-	resp = append(resp, types.CommonProjectParamsResponse{
-		Name:    "tag",
-		Value:   tagVal,
-		Options: tag,
-	})
+	resp = append(resp,
+		types.CommonProjectParamsResponse{
+			Name:    "namespace",
+			Options: namespace,
+		},
+		types.CommonProjectParamsResponse{
+			Name:    "tag",
+			Value:   tagVal,
+			Options: tag,
+		},
+		types.CommonProjectParamsResponse{
+			Name:  "subset",
+			Value: strings.ReplaceAll(tagVal, ".", ""),
+		})
+
+	var params []types.CommonProjectParamsResponse
+	_ = json.Unmarshal([]byte(projectInfo.Params), &params)
+	resp = append(resp, params...)
 
 	return
 }
@@ -105,4 +126,18 @@ func getTags(ctx *svc.ServiceContext, projectInfo *model.ProjectModel) ([]string
 	}
 
 	return newTags, nil
+}
+
+func getNamespace(ctx *svc.ServiceContext) ([]string, error) {
+	ns, err := kubectl.K8sClient.CoreV1().Namespaces().List(ctx, metav1.ListOptions{})
+	if err != nil {
+		ctx.Log.Errorf("%+v", errors.WithStack(err))
+		return nil, err
+	}
+
+	var namespace []string
+	for _, v := range ns.Items {
+		namespace = append(namespace, v.Name)
+	}
+	return namespace, nil
 }

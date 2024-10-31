@@ -1,6 +1,8 @@
 package project
 
 import (
+	"encoding/json"
+
 	"k8s-deploy/model"
 	"k8s-deploy/query"
 	"k8s-deploy/svc"
@@ -13,6 +15,8 @@ import (
 func Add(ctx *svc.ServiceContext, req *types.ProjectAddRequest) error {
 	projectModel := query.ProjectModel
 
+	params, _ := json.Marshal(req.Params)
+
 	err := projectModel.WithContext(ctx).Create(&model.ProjectModel{
 		Name:     req.Name,
 		Desc:     req.Desc,
@@ -20,6 +24,7 @@ func Add(ctx *svc.ServiceContext, req *types.ProjectAddRequest) error {
 		UserName: req.UserName,
 		Token:    req.Token,
 		UseTag:   req.UseTag,
+		Params:   string(params),
 	})
 
 	if err != nil {

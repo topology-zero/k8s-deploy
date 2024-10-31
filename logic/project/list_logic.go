@@ -1,6 +1,7 @@
 package project
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"k8s-deploy/query"
@@ -25,20 +26,16 @@ func List(ctx *svc.ServiceContext, req *types.ProjectListRequest) (resp types.Pr
 
 	result, count, _ := projectModel.WithContext(ctx).
 		Where(where...).
-		Select(
-			projectModel.ID,
-			projectModel.Name,
-			projectModel.Desc,
-			projectModel.Git,
-			projectModel.UseTag,
-			projectModel.UserName,
-		).
 		Order(projectModel.ID.Desc()).
 		FindByPage((req.Page-1)*req.PageSize, req.PageSize)
 
 	copier.Copy(&resp.Data, &result)
+	for i := range result {
+		var params []types.NameAndValue
+		_ = json.Unmarshal([]byte(result[i].Params), &params)
+		resp.Data[i].Params = params
+	}
 
 	resp.Total = int(count)
-
 	return
 }

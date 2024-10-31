@@ -29,9 +29,14 @@ func Add(ctx *svc.ServiceContext, req *types.DeployAddRequest) error {
 		return errors.New("模板不存在")
 	}
 
+	localParams := make(map[string]string)
+	for _, v := range req.Params {
+		localParams[v.Name] = v.Value
+	}
+
 	t := template.Must(template.New("templateByte").Parse(templateInfo.Content))
 	buffer := new(bytes.Buffer)
-	err := t.Execute(buffer, req.Params)
+	err := t.Execute(buffer, localParams)
 	if err != nil {
 		ctx.Log.Error("%+v", errors.WithStack(err))
 		return err

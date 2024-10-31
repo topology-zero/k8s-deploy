@@ -1,6 +1,8 @@
 package project
 
 import (
+	"encoding/json"
+
 	"k8s-deploy/query"
 	"k8s-deploy/svc"
 	"k8s-deploy/types"
@@ -13,12 +15,15 @@ import (
 func Edit(ctx *svc.ServiceContext, req *types.ProjectEditRequest) error {
 	projectModel := query.ProjectModel
 
+	params, _ := json.Marshal(req.Params)
+
 	var assign = []field.AssignExpr{
 		projectModel.Name.Value(req.Name),
 		projectModel.Desc.Value(req.Desc),
 		projectModel.Git.Value(req.Git),
 		projectModel.UserName.Value(req.UserName),
 		projectModel.UseTag.Value(req.UseTag),
+		projectModel.Params.Value(string(params)),
 	}
 
 	if len(req.Token) > 0 {

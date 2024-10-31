@@ -15,8 +15,8 @@ type IDAndName struct {
 }
 
 type NameAndValue struct {
-	Name  string      `json:"name"`
-	Value interface{} `json:"value"`
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
 type CommonProjectListResponse struct {
@@ -196,22 +196,24 @@ type ProjectListResponse struct {
 }
 
 type ProjectList struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	UserName string `json:"userName"`
-	Desc     string `json:"desc"`
-	Git      string `json:"git"`
-	Token    string `json:"token"`
-	UseTag   int    `json:"useTag"`
+	ID       int            `json:"id"`
+	Name     string         `json:"name"`
+	UserName string         `json:"userName"`
+	Desc     string         `json:"desc"`
+	Git      string         `json:"git"`
+	Token    string         `json:"token"`
+	UseTag   int            `json:"useTag"`
+	Params   []NameAndValue `json:"params"`
 }
 
 type ProjectAddRequest struct {
-	Name     string `json:"name"`
-	Desc     string `json:"desc"`
-	Git      string `json:"git"`
-	UserName string `json:"userName"`
-	Token    string `json:"token"`
-	UseTag   int    `json:"useTag"`
+	Name     string         `json:"name"`
+	Desc     string         `json:"desc"`
+	Git      string         `json:"git"`
+	UserName string         `json:"userName"`
+	Token    string         `json:"token"`
+	UseTag   int            `json:"useTag"`
+	Params   []NameAndValue `json:"params"`
 }
 
 type ProjectEditRequest struct {

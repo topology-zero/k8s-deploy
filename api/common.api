@@ -16,7 +16,7 @@ type (
 
     NameAndValue {
         Name string `json:"name"`
-        Value interface{} `json:"value"`
+        Value string `json:"value"`
     }
 
     CommonProjectListResponse {
