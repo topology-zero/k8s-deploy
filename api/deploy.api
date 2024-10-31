@@ -1,0 +1,55 @@
+syntax = "v1"
+
+type (
+    DeployListRequest {
+        Page int `form:"page"`
+        PageSize int `form:"pageSize"`
+        name string `form:"name"`
+    }
+
+    DeployListResponse {
+        Total int `json:"total"`
+        Data []DeployList `json:"data"`
+    }
+
+    DeployList {
+        ID int `json:"id"`
+        DeployName string `json:"deployName"`
+        ProjectName string `json:"projectName"`
+        TemplateName string `json:"templateName"`
+        Status int `json:"status"`
+        UpdateTime string `json:"updateTime"`
+    }
+
+    DeployAddRequest {
+        Name string `json:"name"`
+        ProjectID int `json:"projectId"`
+        TemplateID int `json:"templateId"`
+        Params []NameAndValue `json:"params"`
+    }
+)
+
+@server(
+    jwt: Jwt
+    middleware: Auth
+    group: deploy
+    swtags: 部署管理
+)
+
+service k8s-deploy {
+    @doc "部署列表"
+    @handler list
+    get /deploy (DeployListRequest) returns (DeployListResponse)
+
+    @doc "添加部署"
+    @handler add
+    post /deploy (DeployAddRequest)
+
+    @doc "上线"
+    @handler deploy
+    post /deploy/deploy/:id (PathID)
+
+    @doc "删除部署"
+    @handler del
+    delete /deploy/:id (PathID)
+}

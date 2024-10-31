@@ -14,11 +14,12 @@ func Add(ctx *svc.ServiceContext, req *types.ProjectAddRequest) error {
 	projectModel := query.ProjectModel
 
 	err := projectModel.WithContext(ctx).Create(&model.ProjectModel{
-		Name:        req.Name,
-		Desc:        req.Desc,
-		Git:         req.Git,
-		Token:       req.Token,
-		UseTag:      req.UseTag,
+		Name:     req.Name,
+		Desc:     req.Desc,
+		Git:      req.Git,
+		UserName: req.UserName,
+		Token:    req.Token,
+		UseTag:   req.UseTag,
 	})
 
 	if err != nil {

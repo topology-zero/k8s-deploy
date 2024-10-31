@@ -17,6 +17,7 @@ func Edit(ctx *svc.ServiceContext, req *types.ProjectEditRequest) error {
 		projectModel.Name.Value(req.Name),
 		projectModel.Desc.Value(req.Desc),
 		projectModel.Git.Value(req.Git),
+		projectModel.UserName.Value(req.UserName),
 		projectModel.UseTag.Value(req.UseTag),
 	}
 

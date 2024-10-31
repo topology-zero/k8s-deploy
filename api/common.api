@@ -13,6 +13,23 @@ type (
         ID int `json:"id"`
         Name string `json:"name"`
     }
+
+    NameAndValue {
+        Name string `json:"name"`
+        Value interface{} `json:"value"`
+    }
+
+    CommonProjectListResponse {
+        ID int `json:"id"`
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+    }
+
+    CommonProjectParamsResponse {
+        Name string `json:"name"`
+        Value string `json:"value"`
+        Options []string `json:"options"`
+    }
 )
 
 @server(
@@ -25,4 +42,16 @@ service k8s-deploy {
     @doc "上传图片"
     @handler uploadImage
     post /upload/image returns (string)
+
+    @doc "项目列表"
+    @handler project
+    get /common/project returns ([]CommonProjectListResponse)
+
+    @doc "项目参数"
+    @handler projectParams
+    get /common/project/params/:id (PathID) returns ([]CommonProjectParamsResponse)
+
+    @doc "模板列表"
+    @handler template
+    get /common/template returns ([]IDAndName)
 }

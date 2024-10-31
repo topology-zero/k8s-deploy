@@ -8,6 +8,7 @@ import (
 	adminRole "k8s-deploy/routes/admin/role"
 	adminUser "k8s-deploy/routes/admin/user"
 	common "k8s-deploy/routes/common"
+	deploy "k8s-deploy/routes/deploy"
 	namespace "k8s-deploy/routes/namespace"
 	project "k8s-deploy/routes/project"
 	template "k8s-deploy/routes/template"
@@ -25,4 +26,5 @@ func Setup(e *gin.Engine) {
 	namespace.RegisterNamespaceRoute(e)
 	project.RegisterProjectRoute(e)
 	template.RegisterTemplateRoute(e)
+	deploy.RegisterDeployRoute(e)
 }

@@ -12,4 +12,7 @@ func RegisterCommonRoute(e *gin.Engine) {
 	g := e.Group("")
 	g.Use(middleware.JwtMiddleware)
 	g.POST("/upload/image", common.UploadImageHandle)
+	g.GET("/common/project", common.ProjectHandle)
+	g.GET("/common/project/params/:id", common.ProjectParamsHandle)
+	g.GET("/common/template", common.TemplateHandle)
 }

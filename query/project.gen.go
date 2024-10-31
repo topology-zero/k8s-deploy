@@ -31,6 +31,7 @@ func newProjectModel(db *gorm.DB, opts ...gen.DOOption) projectModel {
 	_projectModel.Name = field.NewString(tableName, "name")
 	_projectModel.Desc = field.NewString(tableName, "desc")
 	_projectModel.Git = field.NewString(tableName, "git")
+	_projectModel.UserName = field.NewString(tableName, "user_name")
 	_projectModel.Token = field.NewString(tableName, "token")
 	_projectModel.UseTag = field.NewInt(tableName, "use_tag")
 	_projectModel.CreateTime = field.NewTime(tableName, "create_time")
@@ -51,7 +52,8 @@ type projectModel struct {
 	Name       field.String // 项目名
 	Desc       field.String // 项目描述
 	Git        field.String // git地址
-	Token      field.String // 令牌
+	UserName   field.String // 用户名
+	Token      field.String // 令牌/密码
 	UseTag     field.Int    // 是否使用 TAG
 	CreateTime field.Time
 	UpdateTime field.Time
@@ -76,6 +78,7 @@ func (p *projectModel) updateTableName(table string) *projectModel {
 	p.Name = field.NewString(table, "name")
 	p.Desc = field.NewString(table, "desc")
 	p.Git = field.NewString(table, "git")
+	p.UserName = field.NewString(table, "user_name")
 	p.Token = field.NewString(table, "token")
 	p.UseTag = field.NewInt(table, "use_tag")
 	p.CreateTime = field.NewTime(table, "create_time")
@@ -109,11 +112,12 @@ func (p *projectModel) GetFieldByName(fieldName string) (field.OrderExpr, bool) 
 }
 
 func (p *projectModel) fillFieldMap() {
-	p.fieldMap = make(map[string]field.Expr, 9)
+	p.fieldMap = make(map[string]field.Expr, 10)
 	p.fieldMap["id"] = p.ID
 	p.fieldMap["name"] = p.Name
 	p.fieldMap["desc"] = p.Desc
 	p.fieldMap["git"] = p.Git
+	p.fieldMap["user_name"] = p.UserName
 	p.fieldMap["token"] = p.Token
 	p.fieldMap["use_tag"] = p.UseTag
 	p.fieldMap["create_time"] = p.CreateTime

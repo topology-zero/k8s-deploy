@@ -31,6 +31,7 @@ func List(ctx *svc.ServiceContext, req *types.ProjectListRequest) (resp types.Pr
 			projectModel.Desc,
 			projectModel.Git,
 			projectModel.UseTag,
+			projectModel.UserName,
 		).
 		Order(projectModel.ID.Desc()).
 		FindByPage((req.Page-1)*req.PageSize, req.PageSize)

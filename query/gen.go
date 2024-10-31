@@ -21,6 +21,7 @@ var (
 	AdminCasbinRuleModel *adminCasbinRuleModel
 	AdminRoleModel       *adminRoleModel
 	AdminUserModel       *adminUserModel
+	DeployModel          *deployModel
 	K8sTemplateModel     *k8sTemplateModel
 	ProjectModel         *projectModel
 )
@@ -31,6 +32,7 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	AdminCasbinRuleModel = &Q.AdminCasbinRuleModel
 	AdminRoleModel = &Q.AdminRoleModel
 	AdminUserModel = &Q.AdminUserModel
+	DeployModel = &Q.DeployModel
 	K8sTemplateModel = &Q.K8sTemplateModel
 	ProjectModel = &Q.ProjectModel
 }
@@ -42,6 +44,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		AdminCasbinRuleModel: newAdminCasbinRuleModel(db, opts...),
 		AdminRoleModel:       newAdminRoleModel(db, opts...),
 		AdminUserModel:       newAdminUserModel(db, opts...),
+		DeployModel:          newDeployModel(db, opts...),
 		K8sTemplateModel:     newK8sTemplateModel(db, opts...),
 		ProjectModel:         newProjectModel(db, opts...),
 	}
@@ -54,6 +57,7 @@ type Query struct {
 	AdminCasbinRuleModel adminCasbinRuleModel
 	AdminRoleModel       adminRoleModel
 	AdminUserModel       adminUserModel
+	DeployModel          deployModel
 	K8sTemplateModel     k8sTemplateModel
 	ProjectModel         projectModel
 }
@@ -67,6 +71,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		AdminCasbinRuleModel: q.AdminCasbinRuleModel.clone(db),
 		AdminRoleModel:       q.AdminRoleModel.clone(db),
 		AdminUserModel:       q.AdminUserModel.clone(db),
+		DeployModel:          q.DeployModel.clone(db),
 		K8sTemplateModel:     q.K8sTemplateModel.clone(db),
 		ProjectModel:         q.ProjectModel.clone(db),
 	}
@@ -87,6 +92,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		AdminCasbinRuleModel: q.AdminCasbinRuleModel.replaceDB(db),
 		AdminRoleModel:       q.AdminRoleModel.replaceDB(db),
 		AdminUserModel:       q.AdminUserModel.replaceDB(db),
+		DeployModel:          q.DeployModel.replaceDB(db),
 		K8sTemplateModel:     q.K8sTemplateModel.replaceDB(db),
 		ProjectModel:         q.ProjectModel.replaceDB(db),
 	}
@@ -97,6 +103,7 @@ type queryCtx struct {
 	AdminCasbinRuleModel IAdminCasbinRuleModelDo
 	AdminRoleModel       IAdminRoleModelDo
 	AdminUserModel       IAdminUserModelDo
+	DeployModel          IDeployModelDo
 	K8sTemplateModel     IK8sTemplateModelDo
 	ProjectModel         IProjectModelDo
 }
@@ -107,6 +114,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		AdminCasbinRuleModel: q.AdminCasbinRuleModel.WithContext(ctx),
 		AdminRoleModel:       q.AdminRoleModel.WithContext(ctx),
 		AdminUserModel:       q.AdminUserModel.WithContext(ctx),
+		DeployModel:          q.DeployModel.WithContext(ctx),
 		K8sTemplateModel:     q.K8sTemplateModel.WithContext(ctx),
 		ProjectModel:         q.ProjectModel.WithContext(ctx),
 	}

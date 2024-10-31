@@ -15,6 +15,7 @@ type (
     ProjectList {
         ID int `json:"id"`
         Name string `json:"name"`
+        UserName string `json:"userName"`
         Desc string `json:"desc"`
         Git string `json:"git"`
         Token string `json:"token"`
@@ -25,6 +26,7 @@ type (
         Name string `json:"name"`
         Desc string `json:"desc"`
         Git string `json:"git"`
+        UserName string `json:"userName"`
         Token string `json:"token"`
         UseTag int `json:"useTag"`
     }

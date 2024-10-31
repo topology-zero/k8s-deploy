@@ -88,6 +88,7 @@ func TestGEN(t *testing.T) {
 		g.GenerateModel("admin_casbin_rule"),
 		g.GenerateModel("project"),
 		g.GenerateModel("k8s_template"),
+		g.GenerateModel("deploy"),
 	)
 
 	// 创建模型的方法 + 创建 query 文件 + 自定义方法

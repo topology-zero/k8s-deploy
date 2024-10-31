@@ -14,6 +14,23 @@ type IDAndName struct {
 	Name string `json:"name"`
 }
 
+type NameAndValue struct {
+	Name  string      `json:"name"`
+	Value interface{} `json:"value"`
+}
+
+type CommonProjectListResponse struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Desc string `json:"desc"`
+}
+
+type CommonProjectParamsResponse struct {
+	Name    string   `json:"name"`
+	Value   string   `json:"value"`
+	Options []string `json:"options"`
+}
+
 type CodeResponse struct {
 	ID    string `json:"id"`    // 在登录时提交
 	Image string `json:"image"` // 验证码 base64 格式
@@ -179,20 +196,22 @@ type ProjectListResponse struct {
 }
 
 type ProjectList struct {
-	ID     int    `json:"id"`
-	Name   string `json:"name"`
-	Desc   string `json:"desc"`
-	Git    string `json:"git"`
-	Token  string `json:"token"`
-	UseTag int    `json:"useTag"`
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	UserName string `json:"userName"`
+	Desc     string `json:"desc"`
+	Git      string `json:"git"`
+	Token    string `json:"token"`
+	UseTag   int    `json:"useTag"`
 }
 
 type ProjectAddRequest struct {
-	Name   string `json:"name"`
-	Desc   string `json:"desc"`
-	Git    string `json:"git"`
-	Token  string `json:"token"`
-	UseTag int    `json:"useTag"`
+	Name     string `json:"name"`
+	Desc     string `json:"desc"`
+	Git      string `json:"git"`
+	UserName string `json:"userName"`
+	Token    string `json:"token"`
+	UseTag   int    `json:"useTag"`
 }
 
 type ProjectEditRequest struct {
@@ -227,4 +246,31 @@ type TemplateAddRequest struct {
 type TemplateEditRequest struct {
 	PathID
 	TemplateAddRequest
+}
+
+type DeployListRequest struct {
+	Page     int    `form:"page"`
+	PageSize int    `form:"pageSize"`
+	Name     string `form:"name"`
+}
+
+type DeployListResponse struct {
+	Total int          `json:"total"`
+	Data  []DeployList `json:"data"`
+}
+
+type DeployList struct {
+	ID           int    `json:"id"`
+	DeployName   string `json:"deployName"`
+	ProjectName  string `json:"projectName"`
+	TemplateName string `json:"templateName"`
+	Status       int    `json:"status"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type DeployAddRequest struct {
+	Name       string         `json:"name"`
+	ProjectID  int            `json:"projectId"`
+	TemplateID int            `json:"templateId"`
+	Params     []NameAndValue `json:"params"`
 }
