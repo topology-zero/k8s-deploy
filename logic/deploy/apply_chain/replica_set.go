@@ -1,12 +1,9 @@
 package apply_chain
 
 import (
-	"time"
-
 	"k8s-deploy/pkg/kubectl"
 
 	"github.com/pkg/errors"
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/yaml"
 	v1 "k8s.io/client-go/applyconfigurations/apps/v1"
@@ -22,12 +19,13 @@ func (d *ReplicaSet) next(ctx *ChainContext) error {
 		return nil
 	}
 	d.ctx = ctx
-
-	err := d.parse()
-	if err != nil {
+	if err := d.parse(); err != nil {
 		return err
 	}
-	return d.apply()
+	if err := d.apply(); err != nil {
+		return err
+	}
+	return checkAllRunning(ctx.Ctx, *d.localYaml.Namespace, d.localYaml.Spec.Template.Labels)
 }
 
 func (d *ReplicaSet) parse() error {
@@ -48,29 +46,6 @@ func (d *ReplicaSet) apply() error {
 		Apply(d.ctx.Ctx, d.localYaml, metav1.ApplyOptions{FieldManager: "application/apply-patch"})
 	if err != nil {
 		d.ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return err
 	}
-
-	ticker := time.NewTicker(time.Second)
-	defer ticker.Stop()
-	deadline := time.After(2 * time.Minute) // 放在 for 循环外面 防止内存泄漏
-	for {
-		select {
-		case <-deadline:
-			return errors.New("POD状态错误")
-		case <-ticker.C:
-			deployment, err := kubectl.K8sClient.
-				CoreV1().
-				Pods(*d.localYaml.Namespace).
-				Get(d.ctx.Ctx, *d.localYaml.Spec.Template.Name, metav1.GetOptions{})
-			if err != nil {
-				d.ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
-				return err
-			}
-
-			if deployment.Status.Phase == corev1.PodRunning {
-				return nil
-			}
-		}
-	}
+	return err
 }

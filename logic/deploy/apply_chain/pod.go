@@ -19,12 +19,13 @@ func (d *Pod) next(ctx *ChainContext) error {
 		return nil
 	}
 	d.ctx = ctx
-
-	err := d.parse()
-	if err != nil {
+	if err := d.parse(); err != nil {
 		return err
 	}
-	return d.apply()
+	if err := d.apply(); err != nil {
+		return err
+	}
+	return checkAllRunning(ctx.Ctx, *d.localYaml.Namespace, d.localYaml.Labels)
 }
 
 func (d *Pod) parse() error {
