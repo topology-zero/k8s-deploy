@@ -1,0 +1,13 @@
+syntax = "v1"
+
+
+@server(
+    group: websocket
+    swtags: websocket
+)
+
+service k8s-deploy {
+    @doc "websocket"
+    @handler websocket
+    get /websocket
+}

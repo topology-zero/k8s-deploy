@@ -44,6 +44,7 @@ func Deploy(ctx *svc.ServiceContext, req *types.PathID) error {
 			Ctx:      ctx,
 			CdrType:  &baseType,
 			YamlByte: rawBytes,
+			ID:       req.ID,
 		}
 		err = apply_chain.ApplyCdr(&ChainCtx)
 		if err != nil {

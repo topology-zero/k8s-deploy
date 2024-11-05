@@ -12,6 +12,7 @@ import (
 	namespace "k8s-deploy/routes/namespace"
 	project "k8s-deploy/routes/project"
 	template "k8s-deploy/routes/template"
+	websocket "k8s-deploy/routes/websocket"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,4 +28,5 @@ func Setup(e *gin.Engine) {
 	project.RegisterProjectRoute(e)
 	template.RegisterTemplateRoute(e)
 	deploy.RegisterDeployRoute(e)
+	websocket.RegisterWebsocketRoute(e)
 }

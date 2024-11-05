@@ -1,6 +1,7 @@
 package apply_chain
 
 import (
+	deploylog "k8s-deploy/logic/deploy_log"
 	"k8s-deploy/pkg/kubectl"
 
 	"github.com/pkg/errors"
@@ -24,7 +25,7 @@ func (d *Job) next(ctx *ChainContext) error {
 	if err != nil {
 		return err
 	}
-	return d.apply()
+	return d.applyWarp()
 }
 
 func (d *Job) parse() error {
@@ -35,6 +36,17 @@ func (d *Job) parse() error {
 		return err
 	}
 	d.localYaml = &applyYaml
+	return nil
+}
+
+func (d *Job) applyWarp() error {
+	deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 0, "部署 Job \n"+string(d.ctx.YamlByte))
+	err := d.apply()
+	if err != nil {
+		deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 3, "部署 Job 失败, 失败原因："+err.Error())
+		return err
+	}
+	deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 1, "部署 Job 成功")
 	return nil
 }
 
