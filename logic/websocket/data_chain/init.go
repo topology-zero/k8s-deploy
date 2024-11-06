@@ -28,10 +28,10 @@ func (m *InitMessage) next(ctx *ChainContext) error {
 		return nil
 	}
 
-	var resp []WebsocketResponse
+	var resp []LogChange
 
 	for _, v := range data {
-		resp = append(resp, WebsocketResponse{
+		resp = append(resp, LogChange{
 			ID:         v.Pid,
 			Type:       v.Type,
 			Message:    v.Message,
@@ -39,6 +39,9 @@ func (m *InitMessage) next(ctx *ChainContext) error {
 		})
 	}
 
-	socket.SendJsonMessage(resp)
+	socket.SendJsonMessage(WebsocketResponse{
+		MsgType: "log_change",
+		Data:    resp,
+	})
 	return nil
 }

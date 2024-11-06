@@ -26,9 +26,30 @@ func RecordLog(ctx *svc.ServiceContext, pid, tp int, msg string) {
 	}
 
 	socket.SendJsonMessage(data_chain.WebsocketResponse{
-		ID:         pid,
-		Type:       tp,
-		Message:    msg,
-		CreateTime: time.Now().Format(time.DateTime),
+		MsgType: "log_change",
+		Data: []data_chain.LogChange{{
+			ID:         pid,
+			Type:       tp,
+			Message:    msg,
+			CreateTime: time.Now().Format(time.DateTime),
+		}},
+	})
+}
+
+func RecordStatus(ctx *svc.ServiceContext, pid, status int) {
+	deployModel := query.DeployModel
+	_, err := deployModel.WithContext(ctx).
+		Where(deployModel.ID.Eq(pid)).
+		UpdateColumnSimple(deployModel.Status.Value(status))
+	if err != nil {
+		ctx.Log.Errorf("%+v", errors.WithStack(err))
+	}
+
+	socket.SendJsonMessage(data_chain.WebsocketResponse{
+		MsgType: "status_change",
+		Data: data_chain.StatusChange{
+			PID:    pid,
+			Status: status,
+		},
 	})
 }

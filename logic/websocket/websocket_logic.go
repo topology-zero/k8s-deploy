@@ -55,10 +55,6 @@ func Websocket(ctx *svc.ServiceContext) {
 			}
 		}
 
-		if dataStr == "done" {
-			socket.SendMessage("done")
-		}
-
 		context := data_chain.ChainContext{Ctx: ctx}
 		data_chain.ParseData(&context, data)
 	}

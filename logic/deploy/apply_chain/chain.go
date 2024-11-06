@@ -6,8 +6,6 @@ import (
 
 	deploylog "k8s-deploy/logic/deploy_log"
 	"k8s-deploy/pkg/kubectl"
-	"k8s-deploy/pkg/socket"
-	"k8s-deploy/query"
 	"k8s-deploy/svc"
 
 	"github.com/pkg/errors"
@@ -75,36 +73,16 @@ func ApplyCdr(ctx *ChainContext) error {
 		new(IstioDestinationRule),
 	}
 
-	deployModel := query.DeployModel
-	_, err := deployModel.WithContext(ctx.Ctx).
-		Where(deployModel.ID.Eq(ctx.ID)).
-		UpdateColumnSimple(deployModel.Status.Value(1))
-	if err != nil {
-		ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return err
-	}
-
-	socket.SendMessage("done")
-	defer socket.SendMessage("done")
-
+	deploylog.RecordStatus(ctx.Ctx, ctx.ID, 1)
 	for _, chain := range chains {
-		if err = chain.next(ctx); err != nil {
-			if _, dbErr := deployModel.WithContext(ctx.Ctx).
-				Where(deployModel.ID.Eq(ctx.ID)).
-				UpdateColumnSimple(deployModel.Status.Value(3)); dbErr != nil {
-				ctx.Ctx.Log.Errorf("%+v", errors.WithStack(dbErr))
-			}
+		err := chain.next(ctx)
+		if err != nil {
+			deploylog.RecordStatus(ctx.Ctx, ctx.ID, 3)
 			return err
 		}
 	}
-
-	_, err = deployModel.WithContext(ctx.Ctx).
-		Where(deployModel.ID.Eq(ctx.ID)).
-		UpdateColumnSimple(deployModel.Status.Value(2))
-	if err != nil {
-		ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
-	}
-	return err
+	deploylog.RecordStatus(ctx.Ctx, ctx.ID, 2)
+	return nil
 }
 
 func checkAllRunning(ctx *ChainContext, namespace string, label map[string]string) error {
