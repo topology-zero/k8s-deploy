@@ -1,5 +1,5 @@
 Server:
-  Name: admin
+  Name: k8s-deploy
   Host: 0.0.0.0
   Port: 8888
 
@@ -18,9 +18,5 @@ Mysql:
   Pwd: 123456
   Db: k8s-deploy
 
-Redis:
-  Host: 127.0.0.1
-  Port: 6379
-  User:
-  Pwd:
-  Db: 0
+K8S:
+  WaitPod: 10

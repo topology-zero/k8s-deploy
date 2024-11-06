@@ -1,26 +1,22 @@
 Server:
-  Name: admin
+  Name: k8s-deploy
   Host: 0.0.0.0
-  Port: 8756
+  Port: 8888
 
 Jwt:
-  Secret:
-  Expire:
+  Secret: qpsit6tBepJWSVn
+  Expire: 24
 
 Log:
-  Dir:
-  Level:
+  Dir: /var/logs/k8s-deploy
+  Level: info # 合法选项 "panic" "fatal" "error" "warn" "warning" "info" "debug" "trace"
 
 Mysql:
-  Host:
-  Port:
-  User:
-  Pwd:
-  Db:
+  Host: 127.0.0.1
+  Port: 3309
+  User: root
+  Pwd: 123456
+  Db: k8s-deploy
 
-Redis:
-  Host:
-  Port:
-  User:
-  Pwd:
-  Db:
+K8S:
+  WaitPod: 10

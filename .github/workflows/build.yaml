@@ -1,0 +1,27 @@
+name: Build Docker Image
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  k8s-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1.下载源码。
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      # 2.构建镜像，并将镜像 push 到远程仓库
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-GitHub-Action@master
+        with:
+          name: tanwuyang/k8s-deploy   # docker image 的名字
+          username: ${{ secrets.DOCKER_OFFICIAL_USERNAME}} # 用户名
+          password: ${{ secrets.DOCKER_PASSWORD }} # 密码
+          dockerfile: Dockerfile # 指定 Dockerfile 的位置
+          tags: "latest,${{ github.ref_name }}"
+

@@ -32,6 +32,15 @@
         },
         {
             "name": "项目管理"
+        },
+        {
+            "name": "模板管理"
+        },
+        {
+            "name": "部署管理"
+        },
+        {
+            "name": "websocket"
         }
     ],
     "security": [
@@ -46,7 +55,7 @@
                     "后台权限相关"
                 ],
                 "summary": "权限列表",
-                "operationId": "7528451a-9a05-45eb-8a3e-ae5ca53749cc",
+                "operationId": "9ff58ad1-4bbc-4f5e-9e05-7647a4035cee",
                 "responses": {
                     "200": {
                         "content": {
@@ -68,7 +77,7 @@
                     "后台权限相关"
                 ],
                 "summary": "添加权限",
-                "operationId": "8427c35b-eb90-4f9b-914f-9aff537d6887",
+                "operationId": "812fa786-ef4a-4e48-952f-fc56ee73ecc0",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -86,7 +95,7 @@
                     "后台权限相关"
                 ],
                 "summary": "编辑权限",
-                "operationId": "11f8eb3b-86e5-42d0-9c49-fc9bb2a746a3",
+                "operationId": "297634b2-03a4-4eb9-83eb-d74d7d452fcd",
                 "parameters": [
                     {
                         "name": "id",
@@ -109,7 +118,7 @@
                     "后台权限相关"
                 ],
                 "summary": "删除权限",
-                "operationId": "0c2209c0-7098-4579-ae43-5076149eb5f1",
+                "operationId": "01aa34dd-5310-4042-bb11-037091bb8537",
                 "parameters": [
                     {
                         "name": "id",
@@ -125,7 +134,7 @@
                     "基础接口相关"
                 ],
                 "summary": "获取所有权限",
-                "operationId": "e886fe6d-c34b-4911-ab31-5b2390bc6b6a",
+                "operationId": "31090014-5874-4d09-a4b2-9a81c2935ce3",
                 "responses": {
                     "200": {
                         "content": {
@@ -149,7 +158,7 @@
                     "基础接口相关"
                 ],
                 "summary": "修改自己的密码",
-                "operationId": "061349b4-a7aa-4134-be1b-560fc1f829a2",
+                "operationId": "743dcb6d-75ed-4509-9ac4-6fff25865a8d",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -167,7 +176,7 @@
                     "基础接口相关"
                 ],
                 "summary": "获取所有角色",
-                "operationId": "b2640c59-9249-4071-aab5-bc25043f9818",
+                "operationId": "c93b5ea4-f08e-4026-94f6-eea39f9ef163",
                 "responses": {
                     "200": {
                         "content": {
@@ -191,7 +200,7 @@
                     "基础接口相关"
                 ],
                 "summary": "获取用户信息",
-                "operationId": "9f3a04d3-5e64-4d38-bfa3-d5900c3614ac",
+                "operationId": "df5fcbf7-5fc0-4b08-89af-0f2f27e59525",
                 "responses": {
                     "200": {
                         "content": {
@@ -212,7 +221,7 @@
                     "登录相关"
                 ],
                 "summary": "获取验证码",
-                "operationId": "bc1887d4-469b-4612-a405-03a9313f1175",
+                "operationId": "dcc74aae-6bbe-4028-a05c-8958c0799f2f",
                 "responses": {
                     "200": {
                         "content": {
@@ -227,13 +236,175 @@
                 }
             }
         },
+        "/common/project": {
+            "get": {
+                "tags": [
+                    "通用接口"
+                ],
+                "summary": "项目列表",
+                "operationId": "72769706-cca8-4281-ab8c-dba00b90b188",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CommonProjectListResponse",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/common/project/params/{id}": {
+            "get": {
+                "tags": [
+                    "通用接口"
+                ],
+                "summary": "项目参数",
+                "operationId": "feb85b95-e6ff-4891-ae9e-c8e107245709",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CommonProjectParamsResponse",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/common/template": {
+            "get": {
+                "tags": [
+                    "通用接口"
+                ],
+                "summary": "模板列表",
+                "operationId": "176a580f-163f-4205-a48e-1b269dcc8c18",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IDAndName",
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deploy": {
+            "get": {
+                "tags": [
+                    "部署管理"
+                ],
+                "summary": "部署列表",
+                "operationId": "b9901581-7ce7-43b0-9d5f-a2ac673a6411",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeployListResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "部署管理"
+                ],
+                "summary": "添加部署",
+                "operationId": "9218fe10-82c8-4eb6-b05a-a1b48c9daf59",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeployAddRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deploy/deploy/{id}": {
+            "post": {
+                "tags": [
+                    "部署管理"
+                ],
+                "summary": "上线",
+                "operationId": "2b11032a-0c17-4bdc-aaf7-bae9c3ce5935",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/deploy/{id}": {
+            "delete": {
+                "tags": [
+                    "部署管理"
+                ],
+                "summary": "删除部署",
+                "operationId": "132bc930-08b1-4d12-bcff-547551dee654",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
                     "登录相关"
                 ],
                 "summary": "登录",
-                "operationId": "4025c047-6c54-4ea4-bfbb-62585759da16",
+                "operationId": "37ed5238-1e7e-44ad-932e-57dc45427e96",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -263,7 +434,7 @@
                     "登录相关"
                 ],
                 "summary": "退出登录",
-                "operationId": "439e914b-0f21-4487-970a-b85e9ae2ca13"
+                "operationId": "2be8222d-a4d2-4ece-a272-cd09e01f8c97"
             }
         },
         "/namespace": {
@@ -272,7 +443,7 @@
                     "命名空间管理"
                 ],
                 "summary": "命名空间列表",
-                "operationId": "f98b1ca0-b430-4108-9d71-48b143cc3cd0",
+                "operationId": "df482b5a-fca1-4a55-8a0d-38f354c5d86d",
                 "responses": {
                     "200": {
                         "content": {
@@ -294,7 +465,7 @@
                     "命名空间管理"
                 ],
                 "summary": "添加命名空间",
-                "operationId": "4f12bb72-b6af-4dc3-b207-a27b6c5d2e95",
+                "operationId": "39019c9e-24cb-4411-b5e6-83b6f58c3c0a",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -310,7 +481,7 @@
                     "命名空间管理"
                 ],
                 "summary": "删除命名空间",
-                "operationId": "92a065ac-e975-44b0-bcbe-5cfee3cb0572",
+                "operationId": "e8090792-67e2-4849-95ad-7e28c5174a49",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -328,7 +499,7 @@
                     "项目管理"
                 ],
                 "summary": "项目列表",
-                "operationId": "3a70590e-7a41-4035-930a-e419ba34a230",
+                "operationId": "38b53d95-94bc-481f-9da3-1f4a851bef5e",
                 "parameters": [
                     {
                         "name": "page",
@@ -336,6 +507,10 @@
                     },
                     {
                         "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "name": "name",
                         "in": "query"
                     }
                 ],
@@ -357,7 +532,7 @@
                     "项目管理"
                 ],
                 "summary": "添加项目",
-                "operationId": "22a0f4ac-283e-48f4-8c78-089a3bb56096",
+                "operationId": "331ea1c2-9b1b-4671-a4c0-e6cddfd97edb",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -375,7 +550,7 @@
                     "项目管理"
                 ],
                 "summary": "编辑项目",
-                "operationId": "2ed30718-5cd6-4587-ba6d-605110cac2b5",
+                "operationId": "65bcbb83-bfc4-468c-897a-2084c3103a0f",
                 "parameters": [
                     {
                         "name": "id",
@@ -398,7 +573,7 @@
                     "项目管理"
                 ],
                 "summary": "删除项目",
-                "operationId": "ecad28fd-2e02-4534-99a8-daf3b7368d2b",
+                "operationId": "ec796a6b-a0a0-473d-916a-82577e19601c",
                 "parameters": [
                     {
                         "name": "id",
@@ -414,7 +589,7 @@
                     "后台角色相关"
                 ],
                 "summary": "角色列表",
-                "operationId": "a667e98a-32dc-4a49-8f0d-527b9567215f",
+                "operationId": "53eac316-da39-4b43-b50b-a88b821bf33a",
                 "parameters": [
                     {
                         "name": "page",
@@ -445,7 +620,7 @@
                     "后台角色相关"
                 ],
                 "summary": "添加角色",
-                "operationId": "b3cfbcdf-bcf7-44b7-b033-b27b7340f27a",
+                "operationId": "0cd6e227-6237-4480-a7db-5567e083bccc",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -463,7 +638,7 @@
                     "后台角色相关"
                 ],
                 "summary": "角色详情",
-                "operationId": "36f49ec2-873c-4e4d-ae5b-ccb357156ebe",
+                "operationId": "74590132-a0ba-41f1-bbd8-8823b05fbb8f",
                 "parameters": [
                     {
                         "name": "id",
@@ -489,7 +664,7 @@
                     "后台角色相关"
                 ],
                 "summary": "编辑角色",
-                "operationId": "20ddd60b-e865-4f4c-b72a-939b67e75111",
+                "operationId": "008f845d-c5f9-4284-8223-667857ba61ed",
                 "parameters": [
                     {
                         "name": "id",
@@ -512,7 +687,97 @@
                     "后台角色相关"
                 ],
                 "summary": "删除角色",
-                "operationId": "69bba66d-0141-4f50-b24b-ed150197e364",
+                "operationId": "4799b36c-aa8c-49cd-83bb-3f921e0359f7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/template": {
+            "get": {
+                "tags": [
+                    "模板管理"
+                ],
+                "summary": "模板列表",
+                "operationId": "b7afab3d-c6ee-4b0e-85f8-94813721e5c0",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TemplateListResponse",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "模板管理"
+                ],
+                "summary": "添加模板",
+                "operationId": "57f5a6b2-4ef0-4859-b872-0ae99e2adcb2",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TemplateAddRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/template/{id}": {
+            "put": {
+                "tags": [
+                    "模板管理"
+                ],
+                "summary": "编辑模板",
+                "operationId": "ebe49259-8c60-42ee-903a-cbf02a34fb6e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TemplateEditRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "模板管理"
+                ],
+                "summary": "删除模板",
+                "operationId": "7817dbb6-2506-46c1-9bb1-17fc3d1073e4",
                 "parameters": [
                     {
                         "name": "id",
@@ -528,7 +793,7 @@
                     "通用接口"
                 ],
                 "summary": "上传图片",
-                "operationId": "5a708da8-6f42-4bb8-8146-c1a96f11c5af",
+                "operationId": "77239fdc-646d-47d9-ae56-4c10b113f55e",
                 "responses": {
                     "200": {
                         "content": {
@@ -548,7 +813,7 @@
                     "后台用户相关"
                 ],
                 "summary": "用户列表",
-                "operationId": "de67b13e-1b0a-412d-8a6e-4f5a6b022785",
+                "operationId": "a11321ed-dff1-462c-bf95-463d863e58aa",
                 "parameters": [
                     {
                         "name": "page",
@@ -579,7 +844,7 @@
                     "后台用户相关"
                 ],
                 "summary": "添加用户",
-                "operationId": "0fb1b2a1-a845-472c-9c22-e5d28092150d",
+                "operationId": "f1b4090f-5a12-4954-86a2-ed72334db028",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -597,7 +862,7 @@
                     "后台用户相关"
                 ],
                 "summary": "用户详情",
-                "operationId": "4b857409-6a4a-4d1b-9226-80736cd62197",
+                "operationId": "4eaa4496-e074-42d1-9036-095d5d76dcb5",
                 "parameters": [
                     {
                         "name": "id",
@@ -623,7 +888,7 @@
                     "后台用户相关"
                 ],
                 "summary": "编辑用户",
-                "operationId": "7cc7fcaf-3217-4d1f-bd18-39bdca5049b1",
+                "operationId": "6e0dc08a-00eb-4f3a-adfe-1ac04d4f77bf",
                 "parameters": [
                     {
                         "name": "id",
@@ -646,7 +911,7 @@
                     "后台用户相关"
                 ],
                 "summary": "删除用户",
-                "operationId": "8f4292f1-446a-4c27-8114-c246ba634b4a",
+                "operationId": "390250eb-31ec-4d3c-bcb3-6618fec93b37",
                 "parameters": [
                     {
                         "name": "id",
@@ -654,6 +919,15 @@
                         "required": true
                     }
                 ]
+            }
+        },
+        "/websocket": {
+            "get": {
+                "tags": [
+                    "websocket"
+                ],
+                "summary": "websocket",
+                "operationId": "e464cd23-2e6e-4d67-8a1d-f0cced78489b"
             }
         }
     },
@@ -818,6 +1092,122 @@
                     }
                 }
             },
+            "CommonProjectListResponse": {
+                "type": "object",
+                "title": "CommonProjectListResponse",
+                "properties": {
+                    "desc": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CommonProjectParamsResponse": {
+                "type": "object",
+                "title": "CommonProjectParamsResponse",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeployAddRequest": {
+                "type": "object",
+                "title": "DeployAddRequest",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "params": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NameAndValue"
+                        }
+                    },
+                    "projectId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "templateId": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "DeployList": {
+                "type": "object",
+                "title": "DeployList",
+                "properties": {
+                    "deployName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "projectName": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "templateName": {
+                        "type": "string"
+                    },
+                    "updateTime": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeployListRequest": {
+                "type": "object",
+                "title": "DeployListRequest",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "page": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "DeployListResponse": {
+                "type": "object",
+                "title": "DeployListResponse",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeployList"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
             "IDAndName": {
                 "type": "object",
                 "title": "IDAndName",
@@ -859,6 +1249,18 @@
                 "properties": {
                     "jwt": {
                         "description": "jwt 凭证",
+                        "type": "string"
+                    }
+                }
+            },
+            "NameAndValue": {
+                "type": "object",
+                "title": "NameAndValue",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
                         "type": "string"
                     }
                 }
@@ -913,12 +1315,21 @@
                     "name": {
                         "type": "string"
                     },
+                    "params": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NameAndValue"
+                        }
+                    },
                     "token": {
                         "type": "string"
                     },
                     "useTag": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "userName": {
+                        "type": "string"
                     }
                 }
             },
@@ -935,12 +1346,21 @@
                     "name": {
                         "type": "string"
                     },
+                    "params": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NameAndValue"
+                        }
+                    },
                     "token": {
                         "type": "string"
                     },
                     "useTag": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "userName": {
+                        "type": "string"
                     }
                 }
             },
@@ -961,12 +1381,21 @@
                     "name": {
                         "type": "string"
                     },
+                    "params": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NameAndValue"
+                        }
+                    },
                     "token": {
                         "type": "string"
                     },
                     "useTag": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "userName": {
+                        "type": "string"
                     }
                 }
             },
@@ -974,6 +1403,9 @@
                 "type": "object",
                 "title": "ProjectListRequest",
                 "properties": {
+                    "name": {
+                        "type": "string"
+                    },
                     "page": {
                         "type": "integer",
                         "format": "int32"
@@ -1100,6 +1532,88 @@
                     },
                     "total": {
                         "description": "总条数",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "TemplateAddRequest": {
+                "type": "object",
+                "title": "TemplateAddRequest",
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TemplateEditRequest": {
+                "type": "object",
+                "title": "TemplateEditRequest",
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TemplateList": {
+                "type": "object",
+                "title": "TemplateList",
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TemplateListRequest": {
+                "type": "object",
+                "title": "TemplateListRequest",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "page": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "TemplateListResponse": {
+                "type": "object",
+                "title": "TemplateListResponse",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TemplateList"
+                        }
+                    },
+                    "total": {
                         "type": "integer",
                         "format": "int32"
                     }

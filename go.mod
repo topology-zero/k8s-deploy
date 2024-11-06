@@ -1,8 +1,6 @@
 module k8s-deploy
 
-go 1.22.0
-
-toolchain go1.23.0
+go 1.23
 
 require (
 	github.com/casbin/casbin/v2 v2.55.1

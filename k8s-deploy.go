@@ -15,6 +15,7 @@ import (
 	"k8s-deploy/pkg/logger"
 	"k8s-deploy/pkg/prometheus"
 	"k8s-deploy/pkg/swagger"
+	"k8s-deploy/pkg/ui"
 	"k8s-deploy/query"
 	"k8s-deploy/routes"
 
@@ -44,6 +45,7 @@ func main() {
 	config.Setup(configFile)
 	logger.Setup()
 	kubectl.Setup()
+	ui.Setup(e)
 	prometheus.Setup(e)
 	//redis.Setup()
 	model.Setup()

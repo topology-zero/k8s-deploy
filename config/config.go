@@ -1,5 +1,13 @@
 package config
 
+type Cfg struct {
+	Server Server
+	Jwt    Jwt
+	Log    Log
+	Mysql  Mysql
+	K8S    K8S
+}
+
 type Server struct {
 	Name string
 	Host string
@@ -24,10 +32,6 @@ type Mysql struct {
 	Db   string
 }
 
-type Redis struct {
-	Host string
-	Port int
-	User string
-	Pwd  string
-	Db   int
+type K8S struct {
+	WaitPod int
 }

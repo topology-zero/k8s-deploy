@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-deploy
+  namespace: prod
+  labels:
+    app: k8s-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-deploy
+  template:
+    metadata:
+      labels:
+        app: k8s-deploy
+    spec:
+      containers:
+        - name: k8s-deploy
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          image: tanwuyang/k8s-deploy
+          args:
+            - "-env"
+            - prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-deploy
+  namespace: prod
+spec:
+  type: ClusterIP
+  selector:
+    app: k8s-deploy
+  ports:
+    - port: 8888
+      targetPort: 8888

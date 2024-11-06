@@ -1,5 +1,5 @@
 # 构建
-FROM golang:1.20-alpine as builder
+FROM golang:1.23-alpine as builder
 WORKDIR /home/project
 ENV GOPROXY=https://goproxy.cn
 COPY ./ ./
@@ -17,4 +17,4 @@ COPY --from=builder /home/project/etc /home/project/etc
 COPY --from=builder /home/project/asset/swagger/ /home/project/asset/swagger
 WORKDIR /home/project
 ENTRYPOINT ["./k8s-deploy"]
-CMD ["-env", "local"]
+CMD ["-env", "prod"]

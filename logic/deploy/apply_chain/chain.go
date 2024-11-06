@@ -4,6 +4,7 @@ import (
 	"sync"
 	"time"
 
+	"k8s-deploy/config"
 	deploylog "k8s-deploy/logic/deploy_log"
 	"k8s-deploy/pkg/kubectl"
 	"k8s-deploy/svc"
@@ -86,10 +87,14 @@ func ApplyCdr(ctx *ChainContext) error {
 }
 
 func checkAllRunning(ctx *ChainContext, namespace string, label map[string]string) error {
+	if config.K8sConf.WaitPod == 0 {
+		return nil
+	}
+
 	deploylog.RecordLog(ctx.Ctx, ctx.ID, 0, "等待POD变为PodRunning")
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
-	deadline := time.After(20 * time.Second) // 放在 for 循环外面 防止内存泄漏
+	deadline := time.After(time.Duration(config.K8sConf.WaitPod) * time.Second) // 放在 for 循环外面 防止内存泄漏
 	for {
 		select {
 		case <-deadline:
