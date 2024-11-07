@@ -1,7 +1,6 @@
 package apply_chain
 
 import (
-	"sync"
 	"time"
 
 	"k8s-deploy/config"
@@ -29,21 +28,8 @@ type interactChain interface {
 	next(ctx *ChainContext) error
 }
 
-// 一次只允许一个
-var deployLock = make(map[int]*sync.Mutex)
 
 func ApplyCdr(ctx *ChainContext) error {
-	lock, ok := deployLock[ctx.ID]
-	if !ok {
-		lock = &sync.Mutex{}
-		deployLock[ctx.ID] = lock
-	}
-
-	if !lock.TryLock() {
-		return errors.New("上线中，请不要重复上线")
-	}
-	defer lock.Unlock()
-
 	chains := []interactChain{
 		// pod
 		new(Deployment),
@@ -74,15 +60,12 @@ func ApplyCdr(ctx *ChainContext) error {
 		new(IstioDestinationRule),
 	}
 
-	deploylog.RecordStatus(ctx.Ctx, ctx.ID, 1)
 	for _, chain := range chains {
 		err := chain.next(ctx)
 		if err != nil {
-			deploylog.RecordStatus(ctx.Ctx, ctx.ID, 3)
 			return err
 		}
 	}
-	deploylog.RecordStatus(ctx.Ctx, ctx.ID, 2)
 	return nil
 }
 
