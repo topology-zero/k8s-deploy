@@ -1,52 +1,45 @@
 ### k8s-deploy 后台管理
 
-通用简易后台管理系统，适用于快速开发，基于Gin + Vue3 + Element UI
+在 k8s 中部署 Deployment、Service、IstioGateway、IstioVirtualService、IstioDestinationRule
 
-### 吸收众多开源项目精华
+### 目前支持的 CDR
 
-* [go-zero](https://github.com/zeromicro/go-zero) 利用 go-zero 插件机制，只需定义 .api 接口定义文件，一行命令就可以生成整个项目基础文件
-
-* [go-zero 的 gengin 插件](https://github.com/MasterJoyHunan/gengin) 基于.api 接口定义文件，生成 Gin 框架的基础文件（handler 控制器，logic 服务，routes 路由）
-
-* [go-zero 的 swagger 插件](https://github.com/MasterJoyHunan/gen-swagger) 基于.api 接口定义文件，生成 Swagger 文档,用于接口测试,与前端对接
-
-* [Gin](https://github.com/gin-gonic/gin) http 框架
-
-* [Casbin](https://github.com/casbin/casbin) 权限认证框架
-
-* [Jwt](https://github.com/dgrijalva/jwt-go) 登录认证
-
-* [Gorm](https://gorm.io/docs) 数据库 ORM 框架
-
-* [GormGen](https://gorm.io/gen) 一键生成数据库模型文件
+* Deployment
+* ReplicationController
+* ReplicaSet
+* StatefulSet
+* DaemonSet
+* Pod
+* Job
+* CronJob
+* Service
+* Endpoint
+* PersistentVolumeClaim
+* ConfigMap
+* IstioGateway
+* IstioVirtualService
+* IstioDestinationRule
 
 ### 特点
 
-* 极简 -- 仅有用户,角色,权限基础功能,没有任何多余的功能
+无需登录服务器使用命名 `kubectl apply -f xxx.yaml`，只需动动鼠标点点就可以实现 k8s 部署 Deployment、Service 等
 
-* 主流 -- 基于现在主流的 http,orm,jwt 框架,学习成本低
+### 部署方法
 
-* 代码规范 -- 定义 api 文件,自动生成代码,保证所有人开发的代码都有一致的规范
+1. 创建 MYSQL 数据库，并将项目下的 `k8s-deploy.sql` 导入
+2. 修改 `k8s-deploy.yaml` 的环境变量配置，配置文件在项目下的 `etc/xxx.yaml` 目录，可以使用环境变量覆盖
+3. 将项目下 k8s-deploy.yaml 复制到 k8s 服务器并部署 `kubectl apply -f k8s-deploy.yaml`
 
-* 文档自动生成 -- 定义 api 文件,自动生成 swagger 接口文档,无需再手动书写接口文档
+### 注意事项
 
-* 二次开发 -- 可以选择自己喜欢 log 包, redis 包进行集成
+默认账号密码 
 
-* 区分环境 -- 可以配置本地,测试,线上环境
+```yaml
+admin
+123456
+```
 
-### 配套项目
-
-* [后台管理接口](https://github.com/topology-zero/k8s-deploy)
-
-* [后台管理UI](https://github.com/topology-zero/k8s-deploy-ui)
-
-### 扩展
-
-##### docker 打包
-
-##### docker-compose 支持
-
-##### workflow 自动构建
+<span style="color:red">部署成功第一件事：立即修改账号密码</span>
 
 ### 联系
 
