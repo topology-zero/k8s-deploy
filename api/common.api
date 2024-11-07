@@ -25,6 +25,11 @@ type (
         Desc string `json:"desc"`
     }
 
+    CommonProjectParamsRequest {
+        PathID
+        TemplateID int `form:"templateId"`
+    }
+
     CommonProjectParamsResponse {
         Name string `json:"name"`
         Value string `json:"value"`
@@ -49,7 +54,7 @@ service k8s-deploy {
 
     @doc "项目参数"
     @handler projectParams
-    get /common/project/params/:id (PathID) returns ([]CommonProjectParamsResponse)
+    get /common/project/params/:id (CommonProjectParamsRequest) returns ([]CommonProjectParamsResponse)
 
     @doc "模板列表"
     @handler template

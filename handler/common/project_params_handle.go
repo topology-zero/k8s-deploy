@@ -11,7 +11,13 @@ import (
 
 // ProjectParamsHandle 项目参数
 func ProjectParamsHandle(c *gin.Context) {
-	var req types.PathID
+	var req types.CommonProjectParamsRequest
+
+	if err := c.ShouldBind(&req); err != nil {
+		response.HandleResponse(c, nil, err)
+		return
+	}
+
 	if err := c.ShouldBindUri(&req); err != nil {
 		response.HandleResponse(c, nil, err)
 		return

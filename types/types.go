@@ -25,6 +25,11 @@ type CommonProjectListResponse struct {
 	Desc string `json:"desc"`
 }
 
+type CommonProjectParamsRequest struct {
+	PathID
+	TemplateID int `form:"templateId"`
+}
+
 type CommonProjectParamsResponse struct {
 	Name    string   `json:"name"`
 	Value   string   `json:"value"`
