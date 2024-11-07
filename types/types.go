@@ -206,7 +206,6 @@ type ProjectList struct {
 	UserName string         `json:"userName"`
 	Desc     string         `json:"desc"`
 	Git      string         `json:"git"`
-	Token    string         `json:"token"`
 	UseTag   int            `json:"useTag"`
 	Params   []NameAndValue `json:"params"`
 }
