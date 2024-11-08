@@ -16,6 +16,7 @@ func Add(ctx *svc.ServiceContext, req *types.ProjectAddRequest) error {
 	projectModel := query.ProjectModel
 
 	params, _ := json.Marshal(req.Params)
+	template, _ := json.Marshal(req.Template)
 
 	err := projectModel.WithContext(ctx).Create(&model.ProjectModel{
 		Name:     req.Name,
@@ -25,6 +26,7 @@ func Add(ctx *svc.ServiceContext, req *types.ProjectAddRequest) error {
 		Token:    req.Token,
 		UseTag:   req.UseTag,
 		Params:   string(params),
+		Template: string(template),
 	})
 
 	if err != nil {

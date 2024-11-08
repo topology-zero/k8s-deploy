@@ -34,6 +34,10 @@ func List(ctx *svc.ServiceContext, req *types.ProjectListRequest) (resp types.Pr
 		var params []types.NameAndValue
 		_ = json.Unmarshal([]byte(result[i].Params), &params)
 		resp.Data[i].Params = params
+
+		params = []types.NameAndValue{}
+		_ = json.Unmarshal([]byte(result[i].Template), &params)
+		resp.Data[i].Template = params
 	}
 
 	resp.Total = int(count)

@@ -44,8 +44,8 @@ type deployLogModel struct {
 
 	ALL        field.Asterisk
 	ID         field.Int
-	Pid        field.Int // 部署ID
-	Type       field.Int
+	Pid        field.Int    // 部署ID
+	Type       field.Int    // 消息登记 0：默认 1：成功 2：警告 3：错误
 	Message    field.String // 消息
 	CreateTime field.Time   // 时间
 

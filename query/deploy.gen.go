@@ -57,7 +57,7 @@ type deployModel struct {
 	Template      field.String // 模板
 	TemplateParse field.String // 模板解析
 	Params        field.String // 模板变量
-	Status        field.Int    // 状态
+	Status        field.Int    // 状态 0：等待上线 1：上线中 2：上线成功 3：上线失败
 	CreateTime    field.Time
 	UpdateTime    field.Time
 	DeleteTime    field.Field

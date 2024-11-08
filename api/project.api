@@ -20,6 +20,7 @@ type (
         Git string `json:"git"`
         UseTag int `json:"useTag"`
         Params []NameAndValue `json:"params"`
+        Template []NameAndValue `json:"template"`
     }
 
     ProjectAddRequest {
@@ -30,6 +31,7 @@ type (
         Token string `json:"token"`
         UseTag int `json:"useTag"`
         Params []NameAndValue `json:"params"`
+        Template []NameAndValue `json:"template"`
     }
 
     ProjectEditRequest {

@@ -16,6 +16,7 @@ func Edit(ctx *svc.ServiceContext, req *types.ProjectEditRequest) error {
 	projectModel := query.ProjectModel
 
 	params, _ := json.Marshal(req.Params)
+	template, _ := json.Marshal(req.Template)
 
 	var assign = []field.AssignExpr{
 		projectModel.Name.Value(req.Name),
@@ -24,6 +25,7 @@ func Edit(ctx *svc.ServiceContext, req *types.ProjectEditRequest) error {
 		projectModel.UserName.Value(req.UserName),
 		projectModel.UseTag.Value(req.UseTag),
 		projectModel.Params.Value(string(params)),
+		projectModel.Template.Value(string(template)),
 	}
 
 	if len(req.Token) > 0 {

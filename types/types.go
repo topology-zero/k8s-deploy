@@ -208,6 +208,7 @@ type ProjectList struct {
 	Git      string         `json:"git"`
 	UseTag   int            `json:"useTag"`
 	Params   []NameAndValue `json:"params"`
+	Template []NameAndValue `json:"template"`
 }
 
 type ProjectAddRequest struct {
@@ -218,6 +219,7 @@ type ProjectAddRequest struct {
 	Token    string         `json:"token"`
 	UseTag   int            `json:"useTag"`
 	Params   []NameAndValue `json:"params"`
+	Template []NameAndValue `json:"template"`
 }
 
 type ProjectEditRequest struct {

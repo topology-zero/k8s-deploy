@@ -22,6 +22,7 @@ type ProjectModel struct {
 	Token      string         `gorm:"column:token;comment:令牌/密码"`      // 令牌/密码
 	UseTag     int            `gorm:"column:use_tag;comment:是否使用 TAG"` // 是否使用 TAG
 	Params     string         `gorm:"column:params;comment:预设变量"`      // 预设变量
+	Template   string         `gorm:"column:template;comment:本项目模板"`   // 本项目模板
 	CreateTime time.Time      `gorm:"column:create_time;default:CURRENT_TIMESTAMP"`
 	UpdateTime time.Time      `gorm:"column:update_time;default:CURRENT_TIMESTAMP"`
 	DeleteTime gorm.DeletedAt `gorm:"column:delete_time"`
