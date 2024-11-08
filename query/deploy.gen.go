@@ -31,8 +31,9 @@ func newDeployModel(db *gorm.DB, opts ...gen.DOOption) deployModel {
 	_deployModel.Name = field.NewString(tableName, "name")
 	_deployModel.ProjectID = field.NewInt(tableName, "project_id")
 	_deployModel.Project = field.NewString(tableName, "project")
-	_deployModel.TemplateID = field.NewInt(tableName, "template_id")
-	_deployModel.Template = field.NewString(tableName, "template")
+	_deployModel.Fingerprint = field.NewString(tableName, "fingerprint")
+	_deployModel.TemplateName = field.NewString(tableName, "template_name")
+	_deployModel.TemplateContent = field.NewString(tableName, "template_content")
 	_deployModel.TemplateParse = field.NewString(tableName, "template_parse")
 	_deployModel.Params = field.NewString(tableName, "params")
 	_deployModel.Status = field.NewInt(tableName, "status")
@@ -48,19 +49,20 @@ func newDeployModel(db *gorm.DB, opts ...gen.DOOption) deployModel {
 type deployModel struct {
 	deployModelDo deployModelDo
 
-	ALL           field.Asterisk
-	ID            field.Int
-	Name          field.String // 部署标题
-	ProjectID     field.Int    // 项目ID
-	Project       field.String // 项目
-	TemplateID    field.Int    // 项目模板
-	Template      field.String // 模板
-	TemplateParse field.String // 模板解析
-	Params        field.String // 模板变量
-	Status        field.Int    // 状态 0：等待上线 1：上线中 2：上线成功 3：上线失败
-	CreateTime    field.Time
-	UpdateTime    field.Time
-	DeleteTime    field.Field
+	ALL             field.Asterisk
+	ID              field.Int
+	Name            field.String // 部署标题
+	ProjectID       field.Int    // 项目ID
+	Project         field.String // 项目
+	Fingerprint     field.String // 模板指纹
+	TemplateName    field.String // 模板名
+	TemplateContent field.String // 模板原始值
+	TemplateParse   field.String // 模板解析值
+	Params          field.String // 模板变量
+	Status          field.Int    // 状态 0：等待上线 1：上线中 2：上线成功 3：上线失败
+	CreateTime      field.Time
+	UpdateTime      field.Time
+	DeleteTime      field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -81,8 +83,9 @@ func (d *deployModel) updateTableName(table string) *deployModel {
 	d.Name = field.NewString(table, "name")
 	d.ProjectID = field.NewInt(table, "project_id")
 	d.Project = field.NewString(table, "project")
-	d.TemplateID = field.NewInt(table, "template_id")
-	d.Template = field.NewString(table, "template")
+	d.Fingerprint = field.NewString(table, "fingerprint")
+	d.TemplateName = field.NewString(table, "template_name")
+	d.TemplateContent = field.NewString(table, "template_content")
 	d.TemplateParse = field.NewString(table, "template_parse")
 	d.Params = field.NewString(table, "params")
 	d.Status = field.NewInt(table, "status")
@@ -115,13 +118,14 @@ func (d *deployModel) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (d *deployModel) fillFieldMap() {
-	d.fieldMap = make(map[string]field.Expr, 12)
+	d.fieldMap = make(map[string]field.Expr, 13)
 	d.fieldMap["id"] = d.ID
 	d.fieldMap["name"] = d.Name
 	d.fieldMap["project_id"] = d.ProjectID
 	d.fieldMap["project"] = d.Project
-	d.fieldMap["template_id"] = d.TemplateID
-	d.fieldMap["template"] = d.Template
+	d.fieldMap["fingerprint"] = d.Fingerprint
+	d.fieldMap["template_name"] = d.TemplateName
+	d.fieldMap["template_content"] = d.TemplateContent
 	d.fieldMap["template_parse"] = d.TemplateParse
 	d.fieldMap["params"] = d.Params
 	d.fieldMap["status"] = d.Status

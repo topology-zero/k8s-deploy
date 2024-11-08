@@ -23,9 +23,22 @@ type (
 
     DeployAddRequest {
         Name string `json:"name"`
-        ProjectID int `json:"projectId"`
-        TemplateID int `json:"templateId"`
+        ID int `json:"Id"`
+        TemplateName string `json:"templateName"`
+        TemplateContent string `json:"templateContent"`
         Params []NameAndValue `json:"params"`
+    }
+
+    DeployProjectDetailResponse {
+        TemplateContent string `json:"templateContent"`
+        TemplateName string `json:"templateName"`
+        Params []ProjectParams `json:"params"`
+    }
+
+    ProjectParams {
+        Name string `json:"name"`
+        Value string `json:"value"`
+        Options []string `json:"options"`
     }
 )
 
@@ -40,6 +53,10 @@ service k8s-deploy {
     @doc "部署列表"
     @handler list
     get /deploy (DeployListRequest) returns (DeployListResponse)
+
+    @doc "项目详情"
+    @handler projectDetail
+    get /deploy/project/:id (PathID) returns ([]DeployProjectDetailResponse)
 
     @doc "添加部署"
     @handler add

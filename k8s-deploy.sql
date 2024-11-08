@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 06/11/2024 13:57:33
+ Date: 08/11/2024 12:36:29
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `admin_auth`  (
   `delete_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `key`(`key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_auth
@@ -76,6 +76,7 @@ INSERT INTO `admin_auth` VALUES (39, 38, '上线单列表', 'deploy:list', 0, '/
 INSERT INTO `admin_auth` VALUES (40, 38, '添加上线单', 'deploy:add', 0, '/deploy', 'post', NULL, NULL, NULL);
 INSERT INTO `admin_auth` VALUES (41, 38, '上线', 'deploy:deploy', 0, '/deploy/deploy/:id', 'post', NULL, NULL, NULL);
 INSERT INTO `admin_auth` VALUES (42, 38, '删除上线单', 'deploy:del', 0, '/deploy/:id', 'delete', NULL, NULL, NULL);
+INSERT INTO `admin_auth` VALUES (43, 38, '获取项目详情', 'deploy:project:detail', 0, '/deploy/peoject/:id', 'get', '2024-11-08 04:36:11', '2024-11-08 04:36:11', NULL);
 
 -- ----------------------------
 -- Table structure for admin_casbin_rule
@@ -94,11 +95,7 @@ CREATE TABLE `admin_casbin_rule`  (
   `v7` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idx_admin_casbin_rule`(`ptype`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`, `v6`, `v7`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'casbin 权限管理' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of admin_casbin_rule
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'casbin 权限管理' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for admin_role
@@ -112,7 +109,7 @@ CREATE TABLE `admin_role`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_role
@@ -135,7 +132,7 @@ CREATE TABLE `admin_user`  (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台用户' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin_user
@@ -151,9 +148,10 @@ CREATE TABLE `deploy`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '部署标题',
   `project_id` int(11) NULL DEFAULT NULL COMMENT '项目ID',
   `project` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '项目',
-  `template_id` int(11) NULL DEFAULT NULL COMMENT '项目模板',
-  `template` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '模板',
-  `template_parse` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '模板解析',
+  `fingerprint` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板指纹',
+  `template_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板名',
+  `template_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '模板原始值',
+  `template_parse` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '模板解析值',
   `params` json NULL COMMENT '模板变量',
   `status` tinyint(4) NULL DEFAULT 0 COMMENT '状态 0：等待上线 1：上线中 2：上线成功 3：上线失败',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
@@ -215,6 +213,7 @@ CREATE TABLE `project`  (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '令牌/密码',
   `use_tag` tinyint(4) NULL DEFAULT 0 COMMENT '是否使用 TAG',
   `params` json NULL COMMENT '预设变量',
+  `template` json NULL COMMENT '本项目模板',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_time` datetime NULL DEFAULT NULL,

@@ -1,0 +1,1 @@
+import{o as u,r as e}from"./index-7e7f9750.js";function C(a,o={},r=!0){u(()=>r&&a());const t=e(!1),c=e([]),n=e({pageSize:10,page:1,...o}),h=e([10,25,50,100]),l=e(1);return{tableLoading:t,list:c,params:n,pageSizes:h,total:l,handleSizeChange:s=>{n.value.pageSize=s,a()},handleCurrentChange:s=>{n.value.page=s,a()},search:()=>{a()}}}export{C as u};

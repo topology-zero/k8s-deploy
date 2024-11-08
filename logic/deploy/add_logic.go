@@ -2,7 +2,9 @@ package deploy
 
 import (
 	"bytes"
+	"crypto/md5"
 	"encoding/json"
+	"fmt"
 	"text/template"
 
 	"k8s-deploy/model"
@@ -16,17 +18,11 @@ import (
 // Add 添加部署
 func Add(ctx *svc.ServiceContext, req *types.DeployAddRequest) error {
 	projectModel := query.ProjectModel
-	k8sTemplateModel := query.K8sTemplateModel
 	deployModel := query.DeployModel
 
-	projectInfo, _ := projectModel.WithContext(ctx).Where(projectModel.ID.Eq(req.ProjectID)).First()
+	projectInfo, _ := projectModel.WithContext(ctx).Where(projectModel.ID.Eq(req.ID)).First()
 	if projectInfo == nil {
 		return errors.New("项目不存在")
-	}
-
-	templateInfo, _ := k8sTemplateModel.WithContext(ctx).Where(k8sTemplateModel.ID.Eq(req.TemplateID)).First()
-	if templateInfo == nil {
-		return errors.New("模板不存在")
 	}
 
 	localParams := make(map[string]string)
@@ -34,7 +30,7 @@ func Add(ctx *svc.ServiceContext, req *types.DeployAddRequest) error {
 		localParams[v.Name] = v.Value
 	}
 
-	t := template.Must(template.New("templateByte").Parse(templateInfo.Content))
+	t := template.Must(template.New("templateByte").Parse(req.TemplateContent))
 	buffer := new(bytes.Buffer)
 	err := t.Execute(buffer, localParams)
 	if err != nil {
@@ -44,16 +40,16 @@ func Add(ctx *svc.ServiceContext, req *types.DeployAddRequest) error {
 
 	params, _ := json.Marshal(req.Params)
 	project, _ := json.Marshal(projectInfo)
-	templateByte, _ := json.Marshal(templateInfo)
 
 	err = deployModel.WithContext(ctx).Create(&model.DeployModel{
-		Name:          req.Name,
-		ProjectID:     req.ProjectID,
-		Project:       string(project),
-		TemplateID:    req.TemplateID,
-		Template:      string(templateByte),
-		TemplateParse: buffer.String(),
-		Params:        string(params),
+		Name:            req.Name,
+		ProjectID:       req.ID,
+		Project:         string(project),
+		Fingerprint:     fmt.Sprintf("%x", md5.Sum([]byte(req.TemplateContent))),
+		TemplateName:    req.TemplateName,
+		TemplateContent: req.TemplateContent,
+		TemplateParse:   buffer.String(),
+		Params:          string(params),
 	})
 
 	if err != nil {

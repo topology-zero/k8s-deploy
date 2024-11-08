@@ -31,16 +31,14 @@ func List(ctx *svc.ServiceContext, req *types.DeployListRequest) (resp types.Dep
 
 	for _, v := range data {
 		var project model.ProjectModel
-		var template model.K8sTemplateModel
 
 		json.Unmarshal([]byte(v.Project), &project)
-		json.Unmarshal([]byte(v.Template), &template)
 
 		resp.Data = append(resp.Data, types.DeployList{
 			ID:           v.ID,
 			DeployName:   v.Name,
 			ProjectName:  project.Name,
-			TemplateName: template.Name,
+			TemplateName: v.TemplateName,
 			Status:       v.Status,
 			UpdateTime:   v.UpdateTime.Format(time.DateTime),
 		})

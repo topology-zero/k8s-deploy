@@ -12,6 +12,7 @@ func RegisterDeployRoute(e *gin.Engine) {
 	g := e.Group("")
 	g.Use(middleware.JwtMiddleware, middleware.AuthMiddleware)
 	g.GET("/deploy", deploy.ListHandle)
+	g.GET("/deploy/project/:id", deploy.ProjectDetailHandle)
 	g.POST("/deploy", deploy.AddHandle)
 	g.POST("/deploy/deploy/:id", deploy.DeployHandle)
 	g.DELETE("/deploy/:id", deploy.DelHandle)

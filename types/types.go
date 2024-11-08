@@ -25,17 +25,6 @@ type CommonProjectListResponse struct {
 	Desc string `json:"desc"`
 }
 
-type CommonProjectParamsRequest struct {
-	PathID
-	TemplateID int `form:"templateId"`
-}
-
-type CommonProjectParamsResponse struct {
-	Name    string   `json:"name"`
-	Value   string   `json:"value"`
-	Options []string `json:"options"`
-}
-
 type CodeResponse struct {
 	ID    string `json:"id"`    // 在登录时提交
 	Image string `json:"image"` // 验证码 base64 格式
@@ -277,8 +266,21 @@ type DeployList struct {
 }
 
 type DeployAddRequest struct {
-	Name       string         `json:"name"`
-	ProjectID  int            `json:"projectId"`
-	TemplateID int            `json:"templateId"`
-	Params     []NameAndValue `json:"params"`
+	Name            string         `json:"name"`
+	ID              int            `json:"Id"`
+	TemplateName    string         `json:"templateName"`
+	TemplateContent string         `json:"templateContent"`
+	Params          []NameAndValue `json:"params"`
+}
+
+type DeployProjectDetailResponse struct {
+	TemplateContent string          `json:"templateContent"`
+	TemplateName    string          `json:"templateName"`
+	Params          []ProjectParams `json:"params"`
+}
+
+type ProjectParams struct {
+	Name    string   `json:"name"`
+	Value   string   `json:"value"`
+	Options []string `json:"options"`
 }

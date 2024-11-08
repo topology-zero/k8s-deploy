@@ -53,7 +53,7 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
-          image: tanwuyang/k8s-deploy:v1.0.5
+          image: tanwuyang/k8s-deploy:v1.0.6
           args:
             - "-env"
             - prod
