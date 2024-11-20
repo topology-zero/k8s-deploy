@@ -16,7 +16,7 @@ type CronJob struct {
 }
 
 func (d *CronJob) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "batch/v1" && *ctx.CdrType.Kind == "CronJob") {
+	if *ctx.CdrType.Kind != "CronJob" {
 		return nil
 	}
 	d.ctx = ctx

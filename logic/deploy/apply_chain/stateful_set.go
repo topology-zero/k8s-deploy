@@ -16,7 +16,7 @@ type StatefulSet struct {
 }
 
 func (d *StatefulSet) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "apps/v1" && *ctx.CdrType.Kind == "StatefulSet") {
+	if *ctx.CdrType.Kind != "StatefulSet" {
 		return nil
 	}
 	d.ctx = ctx

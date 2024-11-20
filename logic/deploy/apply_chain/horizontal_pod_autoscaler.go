@@ -16,7 +16,7 @@ type HorizontalPodAutoscaler struct {
 }
 
 func (d *HorizontalPodAutoscaler) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "autoscaling/v2" && *ctx.CdrType.Kind == "HorizontalPodAutoscaler") {
+	if *ctx.CdrType.Kind != "HorizontalPodAutoscaler" {
 		return nil
 	}
 	d.ctx = ctx

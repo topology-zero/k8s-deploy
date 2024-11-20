@@ -16,7 +16,7 @@ type Pod struct {
 }
 
 func (d *Pod) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "v1" && *ctx.CdrType.Kind == "Pod") {
+	if *ctx.CdrType.Kind != "Pod" {
 		return nil
 	}
 	d.ctx = ctx

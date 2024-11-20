@@ -16,7 +16,7 @@ type Endpoint struct {
 }
 
 func (d *Endpoint) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "v1" && *ctx.CdrType.Kind == "Endpoints") {
+	if *ctx.CdrType.Kind != "Endpoints" {
 		return nil
 	}
 	d.ctx = ctx

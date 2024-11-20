@@ -16,7 +16,7 @@ type Job struct {
 }
 
 func (d *Job) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "batch/v1" && *ctx.CdrType.Kind == "Job") {
+	if *ctx.CdrType.Kind != "Job" {
 		return nil
 	}
 	d.ctx = ctx

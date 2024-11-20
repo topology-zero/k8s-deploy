@@ -16,7 +16,7 @@ type Service struct {
 }
 
 func (d *Service) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "v1" && *ctx.CdrType.Kind == "Service") {
+	if *ctx.CdrType.Kind != "Service" {
 		return nil
 	}
 	d.ctx = ctx

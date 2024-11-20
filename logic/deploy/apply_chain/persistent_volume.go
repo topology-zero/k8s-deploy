@@ -16,7 +16,7 @@ type PersistentVolume struct {
 }
 
 func (d *PersistentVolume) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "v1" && *ctx.CdrType.Kind == "PersistentVolume") {
+	if *ctx.CdrType.Kind != "PersistentVolume" {
 		return nil
 	}
 	d.ctx = ctx

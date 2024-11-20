@@ -16,7 +16,7 @@ type DaemonSet struct {
 }
 
 func (d *DaemonSet) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "apps/v1" && *ctx.CdrType.Kind == "DaemonSet") {
+	if *ctx.CdrType.Kind != "DaemonSet" {
 		return nil
 	}
 	d.ctx = ctx

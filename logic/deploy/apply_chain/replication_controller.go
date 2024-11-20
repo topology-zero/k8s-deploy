@@ -16,7 +16,7 @@ type ReplicationController struct {
 }
 
 func (d *ReplicationController) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "v1" && *ctx.CdrType.Kind == "ReplicationController") {
+	if *ctx.CdrType.Kind != "ReplicationController" {
 		return nil
 	}
 	d.ctx = ctx

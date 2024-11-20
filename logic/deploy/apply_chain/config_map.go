@@ -16,7 +16,7 @@ type ConfigMap struct {
 }
 
 func (d *ConfigMap) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "v1" && *ctx.CdrType.Kind == "ConfigMap") {
+	if *ctx.CdrType.Kind != "ConfigMap" {
 		return nil
 	}
 	d.ctx = ctx

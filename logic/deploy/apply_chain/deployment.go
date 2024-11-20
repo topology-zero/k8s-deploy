@@ -1,6 +1,10 @@
 package apply_chain
 
 import (
+	"fmt"
+	"time"
+
+	"k8s-deploy/config"
 	deploylog "k8s-deploy/logic/deploy_log"
 	"k8s-deploy/pkg/kubectl"
 
@@ -16,7 +20,7 @@ type Deployment struct {
 }
 
 func (d *Deployment) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "apps/v1" && *ctx.CdrType.Kind == "Deployment") {
+	if *ctx.CdrType.Kind != "Deployment" {
 		return nil
 	}
 	d.ctx = ctx
@@ -26,7 +30,7 @@ func (d *Deployment) next(ctx *ChainContext) error {
 	if err := d.applyWarp(); err != nil {
 		return err
 	}
-	return checkAllRunning(ctx, *d.localYaml.Namespace, d.localYaml.Spec.Template.Labels)
+	return d.checkAllRunning()
 }
 
 func (d *Deployment) parse() error {
@@ -60,4 +64,39 @@ func (d *Deployment) apply() error {
 		d.ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
 	}
 	return err
+}
+
+func (d *Deployment) checkAllRunning() error {
+	if config.K8sConf.WaitPod == 0 {
+		return nil
+	}
+
+	deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 0, "等待 Deployment 变为 Available")
+	ticker := time.NewTicker(time.Second)
+	defer ticker.Stop()
+	deadline := time.After(time.Duration(config.K8sConf.WaitPod) * time.Second) // 放在 for 循环外面 防止内存泄漏
+	for {
+		select {
+		case <-deadline:
+			deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 3, "等待 Deployment 状态变化超时")
+			return errors.New("Deployment 状态错误")
+		case <-ticker.C:
+			dp, err := kubectl.K8sClient.
+				AppsV1().
+				Deployments(*d.localYaml.Namespace).
+				Get(d.ctx.Ctx, *d.localYaml.Name, metav1.GetOptions{})
+			if err != nil {
+				deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 2, "查询 Deployment 状态变化错误")
+				d.ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
+				return err
+			}
+
+			if dp.Status.AvailableReplicas-dp.Status.Replicas == 0 {
+				deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 1, "Deployment 状态为 Available")
+				return nil
+			}
+
+			deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 2, fmt.Sprintf("Deployment Available 状态 %d / %d", dp.Status.AvailableReplicas, dp.Status.Replicas))
+		}
+	}
 }

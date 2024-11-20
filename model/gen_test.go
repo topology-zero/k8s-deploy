@@ -77,7 +77,7 @@ func TestGEN(t *testing.T) {
 	g.UseDB(db)
 
 	// 生成全部表的 model
-	g.GenerateAllTable()
+	//g.GenerateAllTable()
 
 	// 创建模型, 不创建 query 文件
 	// g.GenerateModel("admin_user")

@@ -16,7 +16,7 @@ type ReplicaSet struct {
 }
 
 func (d *ReplicaSet) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "apps/v1" && *ctx.CdrType.Kind == "ReplicaSet") {
+	if *ctx.CdrType.Kind != "ReplicaSet" {
 		return nil
 	}
 	d.ctx = ctx

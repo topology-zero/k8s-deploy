@@ -16,7 +16,7 @@ type StorageClass struct {
 }
 
 func (d *StorageClass) next(ctx *ChainContext) error {
-	if !(*ctx.CdrType.APIVersion == "storage.k8s.io/v1" && *ctx.CdrType.Kind == "StorageClass") {
+	if *ctx.CdrType.Kind != "StorageClass" {
 		return nil
 	}
 	d.ctx = ctx
