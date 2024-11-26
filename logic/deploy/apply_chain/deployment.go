@@ -59,7 +59,7 @@ func (d *Deployment) apply() error {
 	_, err := kubectl.K8sClient.
 		AppsV1().
 		Deployments(*d.localYaml.Namespace).
-		Apply(d.ctx.Ctx, d.localYaml, metav1.ApplyOptions{FieldManager: "application/apply-patch"})
+		Apply(d.ctx.Ctx, d.localYaml, metav1.ApplyOptions{FieldManager: "application/apply-patch", DryRun: d.ctx.DryRun})
 	if err != nil {
 		d.ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
 	}
@@ -92,7 +92,7 @@ func (d *Deployment) checkAllRunning() error {
 			}
 
 			if dp.Status.AvailableReplicas-dp.Status.Replicas == 0 {
-				deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 1, "Deployment 状态为 Available")
+				deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 1, fmt.Sprintf("Deployment Available 状态 %d / %d", dp.Status.AvailableReplicas, dp.Status.Replicas))
 				return nil
 			}
 

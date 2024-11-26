@@ -22,7 +22,7 @@
 
 ### 特点
 
-无需登录服务器使用命名 `kubectl apply -f xxx.yaml`，只需动动鼠标点点就可以实现 k8s 部署 Deployment、Service 等
+无需登录服务器使用命令 `kubectl apply -f xxx.yaml`，只需动动鼠标点点就可以实现 k8s 部署 Deployment、Service 等
 
 ### 部署方法
 

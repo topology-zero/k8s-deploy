@@ -284,3 +284,8 @@ type ProjectParams struct {
 	Value   string   `json:"value"`
 	Options []string `json:"options"`
 }
+
+type RunDeployRequest struct {
+	IsDebug bool   `json:"isDebug"`
+	Yaml    string `json:"yaml"`
+}

@@ -1,0 +1,21 @@
+syntax = "v1"
+
+type (
+    RunDeployRequest {
+        IsDebug bool `json:"isDebug"`
+        Yaml string `json:"yaml"`
+    }
+)
+
+@server(
+    jwt: Jwt
+    middleware: Auth
+    group: run
+    swtags: 运行
+)
+
+service k8s-deploy {
+    @doc "运行"
+    @handler deploy
+    post /run/deploy (RunDeployRequest)
+}

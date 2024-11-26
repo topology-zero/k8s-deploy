@@ -11,6 +11,7 @@ import (
 	deploy "k8s-deploy/routes/deploy"
 	namespace "k8s-deploy/routes/namespace"
 	project "k8s-deploy/routes/project"
+	run "k8s-deploy/routes/run"
 	template "k8s-deploy/routes/template"
 	websocket "k8s-deploy/routes/websocket"
 
@@ -29,4 +30,5 @@ func Setup(e *gin.Engine) {
 	template.RegisterTemplateRoute(e)
 	deploy.RegisterDeployRoute(e)
 	websocket.RegisterWebsocketRoute(e)
+	run.RegisterRunRoute(e)
 }

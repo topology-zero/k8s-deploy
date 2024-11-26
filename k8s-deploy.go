@@ -26,7 +26,6 @@ import (
 
 //go:generate gengin k8s-deploy.api
 //go:generate gen-swagger --local_api= k8s-deploy.api
-
 func main() {
 	flag.Parse()
 

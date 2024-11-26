@@ -21,13 +21,13 @@ type ChainContext struct {
 	CdrType  *v1.TypeMetaApplyConfiguration
 	YamlByte []byte
 	ID       int
+	DryRun   []string
 }
 
 type interactChain interface {
 	// 处理逻辑
 	next(ctx *ChainContext) error
 }
-
 
 func ApplyCdr(ctx *ChainContext) error {
 	chains := []interactChain{

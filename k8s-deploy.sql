@@ -76,7 +76,9 @@ INSERT INTO `admin_auth` VALUES (39, 38, '上线单列表', 'deploy:list', 0, '/
 INSERT INTO `admin_auth` VALUES (40, 38, '添加上线单', 'deploy:add', 0, '/deploy', 'post', NULL, NULL, NULL);
 INSERT INTO `admin_auth` VALUES (41, 38, '上线', 'deploy:deploy', 0, '/deploy/deploy/:id', 'post', NULL, NULL, NULL);
 INSERT INTO `admin_auth` VALUES (42, 38, '删除上线单', 'deploy:del', 0, '/deploy/:id', 'delete', NULL, NULL, NULL);
-INSERT INTO `admin_auth` VALUES (43, 38, '获取项目详情', 'deploy:project:detail', 0, '/deploy/peoject/:id', 'get', '2024-11-08 04:36:11', '2024-11-08 04:36:11', NULL);
+INSERT INTO `admin_auth` VALUES (43, 38, '获取项目详情', 'deploy:project:detail', 0, '/deploy/peoject/:id', 'get', NULL, NULL, NULL);
+INSERT INTO `admin_auth` VALUES (44, 0, '调试运行', 'run', 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `admin_auth` VALUES (45, 44, '调试运行提交', 'run:index', 0, '/run/deploy', 'post', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for admin_casbin_rule

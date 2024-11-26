@@ -54,7 +54,7 @@ func (d *IstioDestinationRule) apply() error {
 	_, err := kubectl.IstioClient.
 		NetworkingV1beta1().
 		DestinationRules(*d.localYaml.Namespace).
-		Apply(d.ctx.Ctx, d.localYaml, metav1.ApplyOptions{FieldManager: "application/apply-patch"})
+		Apply(d.ctx.Ctx, d.localYaml, metav1.ApplyOptions{FieldManager: "application/apply-patch", DryRun: d.ctx.DryRun})
 	if err != nil {
 		d.ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
 	}

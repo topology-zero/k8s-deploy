@@ -13,16 +13,18 @@ import (
 )
 
 func RecordLog(ctx *svc.ServiceContext, pid, tp int, msg string) {
-	deployLogModel := query.DeployLogModel
+	if pid > 0 {
+		deployLogModel := query.DeployLogModel
 
-	err := deployLogModel.WithContext(ctx).Create(&model.DeployLogModel{
-		Pid:     pid,
-		Type:    tp,
-		Message: msg,
-	})
+		err := deployLogModel.WithContext(ctx).Create(&model.DeployLogModel{
+			Pid:     pid,
+			Type:    tp,
+			Message: msg,
+		})
 
-	if err != nil {
-		ctx.Log.Errorf("%+v", errors.WithStack(err))
+		if err != nil {
+			ctx.Log.Errorf("%+v", errors.WithStack(err))
+		}
 	}
 
 	socket.SendJsonMessage(data_chain.WebsocketResponse{
@@ -37,12 +39,14 @@ func RecordLog(ctx *svc.ServiceContext, pid, tp int, msg string) {
 }
 
 func RecordStatus(ctx *svc.ServiceContext, pid, status int) {
-	deployModel := query.DeployModel
-	_, err := deployModel.WithContext(ctx).
-		Where(deployModel.ID.Eq(pid)).
-		UpdateColumnSimple(deployModel.Status.Value(status))
-	if err != nil {
-		ctx.Log.Errorf("%+v", errors.WithStack(err))
+	if pid > 0 {
+		deployModel := query.DeployModel
+		_, err := deployModel.WithContext(ctx).
+			Where(deployModel.ID.Eq(pid)).
+			UpdateColumnSimple(deployModel.Status.Value(status))
+		if err != nil {
+			ctx.Log.Errorf("%+v", errors.WithStack(err))
+		}
 	}
 
 	socket.SendJsonMessage(data_chain.WebsocketResponse{
