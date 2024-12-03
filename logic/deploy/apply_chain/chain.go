@@ -101,6 +101,7 @@ func checkAllRunning(ctx *ChainContext, namespace string, label map[string]strin
 				return err
 			}
 
+
 			allRunning := true
 			for _, v := range pods.Items {
 				if v.Status.Phase != corev1.PodRunning {

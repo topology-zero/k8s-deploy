@@ -91,12 +91,13 @@ func (d *Deployment) checkAllRunning() error {
 				return err
 			}
 
+			msg := fmt.Sprintf("Deployment Available 状态 %d / %d", dp.Status.AvailableReplicas, dp.Status.Replicas)
 			if dp.Status.AvailableReplicas-dp.Status.Replicas == 0 {
-				deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 1, fmt.Sprintf("Deployment Available 状态 %d / %d", dp.Status.AvailableReplicas, dp.Status.Replicas))
+				deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 1, msg)
 				return nil
 			}
 
-			deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 2, fmt.Sprintf("Deployment Available 状态 %d / %d", dp.Status.AvailableReplicas, dp.Status.Replicas))
+			deploylog.RecordLog(d.ctx.Ctx, d.ctx.ID, 2, msg)
 		}
 	}
 }

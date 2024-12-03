@@ -1,0 +1,1 @@
+import{u as r,a as c,o as n,c as u,d as p}from"./index-102fccea.js";const d={__name:"index",setup(_){const o=r(),a=c();return n(()=>{const{params:e,query:t}=o,{path:s}=e;a.replace({path:"/"+s,query:t})}),(e,t)=>(u(),p("div"))}};export{d as default};
