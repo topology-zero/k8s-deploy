@@ -1,1 +1,0 @@
-import{s as t}from"./index-102fccea.js";function r(e){return t({url:"/deploy",params:e})}function u(e){return t({url:"/deploy",method:"post",data:e})}function d(e){return t({url:"/deploy/deploy/"+e,method:"post",timeout:0})}function l(e){return t({url:"/deploy/"+e,method:"delete"})}function n(e){return t({url:"/deploy/project/"+e,timeout:0})}export{l as a,n as b,u as c,d,r as g};

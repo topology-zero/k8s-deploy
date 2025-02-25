@@ -1,1 +1,0 @@
-import{_ as e,c,d as s,f as n,k as o}from"./index-102fccea.js";const t={},a={class:"my-404-container"};function r(d,i){const _=o;return c(),s("div",a,[n(_,{"icon-class":"404",class:"my-404-img"})])}const p=e(t,[["render",r],["__scopeId","data-v-66bf2050"]]);export{p as default};
