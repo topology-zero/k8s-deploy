@@ -48,8 +48,8 @@ func ApplyCdr(ctx *ChainContext) error {
 		new(Endpoint),
 
 		// pvc
-		//new(StorageClass),
-		//new(PersistentVolume),
+		// new(StorageClass),
+		// new(PersistentVolume),
 		new(PersistentVolumeClaim),
 
 		new(ConfigMap),
@@ -58,6 +58,9 @@ func ApplyCdr(ctx *ChainContext) error {
 		new(IstioGateway),
 		new(IstioVirtualService),
 		new(IstioDestinationRule),
+
+		// hpa
+		new(HorizontalPodAutoscaler),
 	}
 
 	for _, chain := range chains {
@@ -100,7 +103,6 @@ func checkAllRunning(ctx *ChainContext, namespace string, label map[string]strin
 				ctx.Ctx.Log.Errorf("%+v", errors.WithStack(err))
 				return err
 			}
-
 
 			allRunning := true
 			for _, v := range pods.Items {
