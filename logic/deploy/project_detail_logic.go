@@ -153,7 +153,7 @@ func getGitTags(ctx *svc.ServiceContext, projectInfo *model.ProjectModel) ([]str
 		return nil, err
 	}
 
-	urlParse.User = url.UserPassword("joy_list", projectInfo.Token)
+	urlParse.User = url.UserPassword(projectInfo.UserName, projectInfo.Token)
 
 	split := strings.Split(projectInfo.Git, "/")
 
