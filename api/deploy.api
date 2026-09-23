@@ -32,6 +32,7 @@ type (
     DeployProjectDetailResponse {
         TemplateContent string `json:"templateContent"`
         TemplateName string `json:"templateName"`
+        CommitMessage string `json:"commitMessage"`
         Params []ProjectParams `json:"params"`
     }
 

@@ -50,11 +50,12 @@ func ProjectDetail(ctx *svc.ServiceContext, req *types.PathID) (resp []types.Dep
 	}
 
 	var tag []string
+	var commitMsg string
 	tagVal := ""
 	if projectInfo.UseTag == 0 {
 		tag = []string{"latest"}
 	} else {
-		tag, err = getGitTags(ctx, projectInfo)
+		tag, commitMsg, err = getGitTags(ctx, projectInfo)
 		if err != nil {
 			return nil, err
 		}
@@ -70,6 +71,7 @@ func ProjectDetail(ctx *svc.ServiceContext, req *types.PathID) (resp []types.Dep
 	}
 
 	for i, v := range resp {
+		resp[i].CommitMessage = commitMsg
 		subMatch := k8sTemplateVar.FindAllStringSubmatch(v.TemplateContent, -1)
 		tempVar := make(map[string]int)
 		for _, vv := range subMatch {
@@ -146,11 +148,11 @@ func ProjectDetail(ctx *svc.ServiceContext, req *types.PathID) (resp []types.Dep
 	return
 }
 
-func getGitTags(ctx *svc.ServiceContext, projectInfo *model.ProjectModel) ([]string, error) {
+func getGitTags(ctx *svc.ServiceContext, projectInfo *model.ProjectModel) ([]string, string, error) {
 	urlParse, err := url.Parse(projectInfo.Git)
 	if err != nil {
 		ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return nil, err
+		return nil, "", err
 	}
 
 	urlParse.User = url.UserPassword(projectInfo.UserName, projectInfo.Token)
@@ -170,30 +172,33 @@ func getGitTags(ctx *svc.ServiceContext, projectInfo *model.ProjectModel) ([]str
 
 	if err != nil {
 		ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return nil, err
+		return nil, "", err
 	}
 
 	worktree, err := repository.Worktree()
 	if err != nil {
 		ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return nil, err
+		return nil, "", err
 	}
 
 	err = worktree.Pull(&git.PullOptions{Force: true})
 	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
 		ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return nil, err
+		return nil, "", err
 	}
 
 	tags, err := repository.Tags()
 	if err != nil {
 		ctx.Log.Errorf("%+v", errors.WithStack(err))
-		return nil, err
+		return nil, "", err
 	}
 
 	var newTags []string
+	var msg string
 	tags.ForEach(func(reference *plumbing.Reference) error {
 		newTags = append(newTags, strings.TrimLeft(reference.Name().String(), "refs/tags/"))
+		commit, _ := repository.CommitObject(reference.Hash())
+		msg = strings.TrimSpace(commit.Message)
 		return nil
 	})
 
@@ -205,7 +210,7 @@ func getGitTags(ctx *svc.ServiceContext, projectInfo *model.ProjectModel) ([]str
 		newTags = newTags[:6]
 	}
 
-	return newTags, nil
+	return newTags, msg, nil
 }
 
 func getNamespace(ctx *svc.ServiceContext) ([]string, error) {

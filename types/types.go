@@ -276,6 +276,7 @@ type DeployAddRequest struct {
 type DeployProjectDetailResponse struct {
 	TemplateContent string          `json:"templateContent"`
 	TemplateName    string          `json:"templateName"`
+	CommitMessage   string          `json:"commitMessage"`
 	Params          []ProjectParams `json:"params"`
 }
 
